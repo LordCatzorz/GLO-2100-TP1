@@ -25,6 +25,10 @@ public:
 
 	void deplacerColonneAPile (int p_colonneSource, int p_pileDestination);
 
+	bool verifieGagne() const;
+
+	string reqEtatJeu () const;
+
 };
 
 #endif
