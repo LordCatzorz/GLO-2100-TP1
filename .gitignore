@@ -31,3 +31,6 @@
 *.suo
 *.opensdf
 *.sdf
+/Solitaire.sln
+/Solitaire.vcxproj
+/Solitaire.vcxproj.filters
