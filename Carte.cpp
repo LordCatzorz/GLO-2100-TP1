@@ -1,14 +1,14 @@
 /*
- * Carte.cpp
- *
- *  Created on: 2015-09-24
- *      Author: etudiant
- */
+* Carte.cpp
+*
+*  Created on: 2015-09-24
+*      Author: etudiant
+*/
 
 
 #include "Carte.h"
 #include <sstream>
- #include <cstdlib>
+#include <cstdlib>
 using namespace std;
 
 Carte::Carte (Valeur p_valeur, Sorte p_sorte)
@@ -19,12 +19,12 @@ Carte::Carte (Valeur p_valeur, Sorte p_sorte)
 
 const bool Carte::estSuivante(const Carte& p_carte)
 {
-	return this->m_valeur == p_carte.m_valeur + 1;
+	return this->reqValeur() == p_carte.reqValeur() + 1;
 }
 
 const bool Carte::estMemeCouleur(const Carte& p_carte)
 {
-	return this->estCouleurNoir(this->m_sorte) == this->estCouleurNoir(p_carte.m_sorte);
+	return this->estCouleurNoir() == p_carte.estCouleurNoir();
 }
 
 ostream& operator<< (ostream& sortie, const Carte& p_carte)
@@ -37,7 +37,7 @@ std::string Carte::reqSorteString() const
 {
 	string sortie;
 
-	switch (this->m_sorte)
+	switch (this->reqSorte())
 	{
 	case COEUR:
 		sortie = "CO";
@@ -61,7 +61,7 @@ std::string Carte::reqSorteString() const
 std::string Carte::reqValeurString () const
 {
 	std::string sortie;
-	switch (this->m_valeur)
+	switch (this->reqValeur())
 	{
 	case AS:
 		sortie = "A";
@@ -108,20 +108,29 @@ std::string Carte::reqValeurString () const
 	return sortie;
 }
 
-const bool Carte::estCouleurNoir(const Sorte p_sorte) const
+const bool Carte::estCouleurNoir() const
 {
 	bool carteEstNoire;
-	switch (p_sorte)
+	switch (this->reqSorte())
 	{
-		case PIQUE:
-		case TREFLE:
-			carteEstNoire = true;
-			break;
-		default:
-			carteEstNoire = false;
-			break;
+	case PIQUE:
+	case TREFLE:
+		carteEstNoire = true;
+		break;
+	default:
+		carteEstNoire = false;
+		break;
 	};
 	return carteEstNoire;
 }
 
+const Valeur Carte::reqValeur() const
+{
+	return this->m_valeur;
+}
+
+const Sorte Carte::reqSorte() const
+{
+	return this->m_sorte;
+}
 

@@ -83,7 +83,7 @@ bool ColonneCartes::peutAjouterCarte(const Carte& p_carte) const
 
 	if (this->m_lesCartes.empty())
 	{
-		if(p_carte.m_valeur == ROI)
+		if(p_carte.reqSorte() == ROI)
 		{
 			return true;
 		}

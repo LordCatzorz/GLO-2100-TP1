@@ -17,9 +17,6 @@
 class Carte
 {
 public:
-	Sorte m_sorte;
-	Valeur m_valeur;
-
 	Carte (Valeur p_valeur, Sorte p_sorte);
 
 	const bool estSuivante(const Carte& p_carte);
@@ -28,9 +25,15 @@ public:
 
 	friend std::ostream& operator<< (std::ostream& sortie, const Carte& p_carte);
 
-	const bool estCouleurNoir(const Sorte p_sorte) const;
+	const bool estCouleurNoir() const;
+
+	const Valeur reqValeur() const;
+	const Sorte reqSorte() const;
 
 private:
+	Sorte m_sorte;
+	Valeur m_valeur;
+
 	std::string reqSorteString() const;
 	std::string reqValeurString() const;
 };
