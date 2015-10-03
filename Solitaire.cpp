@@ -26,7 +26,7 @@ void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_c
 	PRECONDITION(p_nbCartes > 0);
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(p_colonneSource <= 6);
-	PRECONDITION(this->m_colonnes[p_colonneSource].m_nbCartesVisibles >= p_nbCartes);
+	PRECONDITION(this->m_colonnes[p_colonneSource].reqNbCartesVisibles() >= p_nbCartes);
 	PRECONDITION(!this->m_colonnes[p_colonneDestination].m_lesCartes.back().estMemeCouleur(*this->m_colonnes[p_colonneSource].m_lesCartes.end().operator-(p_nbCartes)));
 	PRECONDITION(this->m_colonnes[p_colonneDestination].m_lesCartes.back().estSuivante(*this->m_colonnes[p_colonneSource].m_lesCartes.end().operator-(p_nbCartes)));
 	this->m_colonnes[p_colonneSource].deplacePaquet(this->m_colonnes[p_colonneDestination], p_nbCartes);
