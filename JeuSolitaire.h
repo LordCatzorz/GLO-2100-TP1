@@ -25,7 +25,7 @@ private:
 
 	int menuSelectionnerColonneSource();
 	int menuSelectionnerColonneDestination();
-	int menuSelectionnerPile();
+	int menuSelectionnerPileDestination();
 	int menuSelectionnerNombreCartes();
 };
 

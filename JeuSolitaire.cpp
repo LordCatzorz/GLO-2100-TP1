@@ -61,22 +61,25 @@ void JeuSolitaire::jouer()
 
 void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
 {
-	std::cout << "menuDeplacerCarteTalonVersColonne n'est pas encore implémentée";
+	int colonneDestination = menuSelectionnerColonneDestination();
 }
 
 void JeuSolitaire::menuDeplacerCarteTalonVersPile()
 {
-	std::cout << "menuDeplacerCarteTalonVersPile n'est pas encore implémentée";
+	int pileDestination =menuSelectionnerPileDestination();
 }
 
 void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 {
-	std::cout << "menuDeplacerCarteColonneVersColonne n'est pas encore implémentée";
+	int colonneSource = menuSelectionnerColonneSource();
+	int colonneDestination = menuSelectionnerColonneDestination();
+	int nombreCartes = menuSelectionnerNombreCartes();
 }
 
 void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 {
-	std::cout << "menuDeplacerCarteColonneVersPile n'est pas encore implémentée";
+	int colonneSource = menuSelectionnerColonneSource();
+	int pileDestination = menuSelectionnerPileDestination();
 }
 
 int JeuSolitaire::menuSelectionnerColonneSource()
@@ -89,7 +92,7 @@ int JeuSolitaire::menuSelectionnerColonneDestination()
 	std::cout << "menuSelectionnerColonneDestination n'est pas encore implémentée.";
 }
 
-int JeuSolitaire::menuSelectionnerPile()
+int JeuSolitaire::menuSelectionnerPileDestination()
 {
 	std::cout << "menuSelectionnerPile n'est pas encore implémentée.";
 }
