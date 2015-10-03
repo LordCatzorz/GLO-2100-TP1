@@ -28,7 +28,7 @@ private:
 	int menuSelectionnerPileDestination();
 	int menuSelectionnerNombreCartes();
 
-	bool convertirEntreeEnIntAvecValidation(std::string caractereEntree, int& valeurEntiereEntree, const int debutPortee , const int finPortee);
+	bool convertirStringEnIntAvecValidation(std::string stringEntree, int& valeurEntiereEntree, const int debutPortee , const int finPortee, const int maxNombreCaractere);
 };
 
 
