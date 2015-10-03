@@ -65,6 +65,9 @@ std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCa
 		{
 			nbCarteCache =0;
 		}
+
+		nbCarteCache = 0;
+
 		for (int i = 0; i < nbCarteCache; ++i)
 		{
 			sortie << "? ";
@@ -120,3 +123,17 @@ const std::vector<Carte>& ColonneCartes::reqLesCartes() const
 	return this->m_lesCartes;
 }
 
+
+Carte& ColonneCartes::reqCarteDessus ()
+{
+	PRECONDITION(this->m_lesCartes.size() > 0);
+	return this->m_lesCartes.back();
+}
+
+
+Carte& ColonneCartes::reqCartePosition(const int p_position)
+{
+	PRECONDITION(this->m_lesCartes.size() > 0);
+	PRECONDITION(p_position <= this->reqNbCartesVisibles());
+	return *(this->m_lesCartes.end() - p_position);
+}

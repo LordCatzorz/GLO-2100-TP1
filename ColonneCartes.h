@@ -31,11 +31,13 @@ public:
 		friend std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCartes);
 		const std::vector<Carte>& reqLesCartes() const;
 
+		Carte& reqCarteDessus();
+		Carte& reqCartePosition(const int p_position);
+
 private:
 		int m_nbCartesVisibles;
 		std::vector<Carte> m_lesCartes;
 
-		Carte& obtenirCarteDessus () const;
 		bool peutAjouterCarte(const Carte& p_carte) const;
 		void changerNombreCarteVisible(const int p_differenceNbCarte);
 };

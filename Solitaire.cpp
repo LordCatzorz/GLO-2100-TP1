@@ -21,36 +21,37 @@ void Solitaire::avancerTalon()
 
 void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_colonneDestination, const int p_nbCartes)
 {
-	PRECONDITION(p_colonneSource > 0);
-	PRECONDITION(p_colonneDestination > 0);
+	PRECONDITION(p_colonneSource >= 0);
+	PRECONDITION(p_colonneDestination >= 0);
 	PRECONDITION(p_nbCartes > 0);
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(this->m_colonnes[p_colonneSource].reqNbCartesVisibles() >= p_nbCartes);
-	PRECONDITION(!this->m_colonnes[p_colonneDestination].reqLesCartes().back().estMemeCouleur(*this->m_colonnes[p_colonneSource].reqLesCartes().end().operator-(p_nbCartes)));
+	PRECONDITION(!this->reqDessusColonne(p_colonneDestination).estMemeCouleur(*this->m_colonnes[p_colonneSource].reqLesCartes().end().operator-(p_nbCartes)));
 	PRECONDITION(this->m_colonnes[p_colonneDestination].reqLesCartes().back().estSuivante(*this->m_colonnes[p_colonneSource].reqLesCartes().end().operator-(p_nbCartes)));
 	this->m_colonnes[p_colonneSource].deplacePaquet(this->m_colonnes[p_colonneDestination], p_nbCartes);
 }
 
 void Solitaire::deplacerTalonAColonne (const int p_colonneDestination)
 {
-	PRECONDITION(p_colonneDestination > 0);
+	PRECONDITION(p_colonneDestination >= 0);
 	PRECONDITION(p_colonneDestination <= 6);
 	PRECONDITION(this->m_talon.size() > 0);
 	PRECONDITION(!this->m_talon.front().estMemeCouleur(this->m_colonnes[p_colonneDestination].reqLesCartes().back()));
 	PRECONDITION(this->m_colonnes[p_colonneDestination].reqLesCartes().back().estSuivante(this->m_talon.front()));
-	
+
 	this->m_colonnes[p_colonneDestination].ajoute(this->m_talon.front());
 	this->m_talon.pop_front();
 }
 
 void Solitaire::deplacerTalonAPile (const int p_pileDestination)
 {
-	PRECONDITION(p_pileDestination > 0);
+	PRECONDITION(p_pileDestination >= 0);
 	PRECONDITION(p_pileDestination <= 3);
 	PRECONDITION(this->m_talon.size() > 0);
-	PRECONDITION(!this->m_talon.front().estMemeCouleur(this->m_piles[p_pileDestination].top()));
-	PRECONDITION(this->m_piles[p_pileDestination].top().estSuivante(this->m_talon.front()));
+	PRECONDITION(this->m_piles[p_pileDestination].size() > 0 && !this->m_talon.front().estMemeCouleur(this->m_piles[p_pileDestination].top()));
+	PRECONDITION(this->m_piles[p_pileDestination].size() > 0 && this->m_piles[p_pileDestination].top().estSuivante(this->m_talon.front()));
+	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 && this->m_talon.front().reqValeur() == ROI);
 
 	this->m_piles[p_pileDestination].push(this->m_talon.front());
 	this->m_talon.pop_front();
@@ -58,13 +59,13 @@ void Solitaire::deplacerTalonAPile (const int p_pileDestination)
 
 void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pileDestination)
 {
-	PRECONDITION(p_pileDestination > 0);
+	PRECONDITION(p_pileDestination >= 0);
 	PRECONDITION(p_pileDestination <= 3);
-	PRECONDITION(p_colonneSource > 0);
+	PRECONDITION(p_colonneSource >= 0);
 	PRECONDITION(p_colonneSource <= 6);
 
 	PRECONDITION(this->m_colonnes[p_colonneSource].reqLesCartes().size() > 0);
-	PRECONDITION(!this->m_colonnes[p_colonneSource].reqLesCartes().front().estMemeCouleur(this->m_piles[p_pileDestination].top()));
+	PRECONDITION(!this->m_colonnes[p_colonneSource].reqLesCartes().front().estMemeCouleur(reqDessusPile(p_pileDestination)));
 	PRECONDITION(this->m_piles[p_pileDestination].top().estSuivante(this->m_colonnes[p_colonneSource].reqLesCartes().front()));
 
 	this->m_piles[p_pileDestination].push(this->m_colonnes[p_colonneSource].reqLesCartes().back());
@@ -111,7 +112,6 @@ std::string Solitaire::reqEtatJeu () const
 
 std::ostream& operator<< (std::ostream& sortie, const Solitaire& p_solitaire)
 {
-
 	sortie << p_solitaire.reqEtatJeu();
 	return sortie;
 }
@@ -131,8 +131,6 @@ void Solitaire::initialiserTalon()
 	srand((unsigned int)time(0));
 
 	std::random_shuffle(this->m_talon.begin(), this->m_talon.end());
-
-
 }
 
 void Solitaire::initialiserColonnes()
@@ -148,7 +146,54 @@ void Solitaire::initialiserColonnes()
 		{
 			this->m_talon.pop_front();
 		}
-
 	}
 }
 
+
+const std::deque<Carte>& Solitaire::reqTalon() const
+{
+	return this->m_talon;
+}
+const ColonneCartes& Solitaire::reqColonne(const int p_numeroColonne) const
+{
+	PRECONDITION(p_numeroColonne >= 0);
+	PRECONDITION(p_numeroColonne <= 6);
+
+	return this->m_colonnes[p_numeroColonne];
+}
+const std::stack<Carte>& Solitaire::reqPile(const int p_numeroPile) const
+{
+	PRECONDITION(p_numeroPile >= 0);
+	PRECONDITION(p_numeroPile <= 3);
+
+	return this->m_piles[p_numeroPile];
+}
+
+Carte& Solitaire::reqDessusPile(int p_numeroPile)
+{
+	PRECONDITION(p_numeroPile >= 0);
+	PRECONDITION(p_numeroPile <= 3);
+	
+	return this->m_piles[p_numeroPile].top();
+}
+
+Carte& Solitaire::reqDessusTalon()
+{
+	return this->m_talon.front();
+}
+
+
+Carte& Solitaire::reqDessusColonne(const int p_numeroColonne)
+{
+	PRECONDITION(p_numeroColonne >= 0);
+	PRECONDITION(p_numeroColonne <= 6);
+	return this->m_colonnes[p_numeroColonne].reqCarteDessus();
+}
+
+Carte& Solitaire::reqCartePositionColonne(const int p_numeroColonne, const int p_position)
+{
+	PRECONDITION(p_numeroColonne >= 0);
+	PRECONDITION(p_numeroColonne <= 6);
+	PRECONDITION(p_position <= this->m_colonnes[p_numeroColonne].reqNbCartesVisibles());
+	return this->m_colonnes[p_numeroColonne].reqCartePosition(p_position);
+}
