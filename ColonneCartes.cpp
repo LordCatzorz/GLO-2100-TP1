@@ -33,9 +33,12 @@ void ColonneCartes::deplacePaquet (ColonneCartes& p_destination, int p_nombreCar
 	PRECONDITION(p_nombreCartes <= this->reqNbCartesVisibles());
 	std::vector<Carte>::iterator derniereCarteADeplacer = this->m_lesCartes.end() - p_nombreCartes;
 	PRECONDITION(p_destination.peutAjouterCarte(*derniereCarteADeplacer));
-	for (std::vector<Carte>::iterator iter = derniereCarteADeplacer; iter != this->m_lesCartes.end();)
+	for (std::vector<Carte>::iterator iter = derniereCarteADeplacer; iter != this->m_lesCartes.end();iter++)
 	{
 		p_destination.ajoute(*iter);
+	}
+	for (int i = 0; i < p_nombreCartes; i++)
+	{
 		this->supprimeDerniereCarte();
 	}
 }
