@@ -17,10 +17,16 @@ public:
 private:
 	Solitaire solitaire;
 	static const std::string menu;
+
 	void menuDeplacerCarteTalonVersColonne();
 	void menuDeplacerCarteTalonVersPile();
 	void menuDeplacerCarteColonneVersColonne();
 	void menuDeplacerCarteColonneVersPile();
+
+	int menuSelectionnerColonneSource();
+	int menuSelectionnerColonneDestination();
+	int menuSelectionnerPile();
+	int menuSelectionnerNombreCartes();
 };
 
 

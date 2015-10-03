@@ -78,3 +78,23 @@ void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 {
 	std::cout << "menuDeplacerCarteColonneVersPile n'est pas encore implémentée";
 }
+
+int JeuSolitaire::menuSelectionnerColonneSource()
+{
+	std::cout << "menuSelectionnerColonneSource n'est pas encore implémentée.";
+}
+
+int JeuSolitaire::menuSelectionnerColonneDestination()
+{
+	std::cout << "menuSelectionnerColonneDestination n'est pas encore implémentée.";
+}
+
+int JeuSolitaire::menuSelectionnerPile()
+{
+	std::cout << "menuSelectionnerPile n'est pas encore implémentée.";
+}
+
+int JeuSolitaire::menuSelectionnerNombreCartes()
+{
+	std::cout << "menuSelectionnerNombreCartes n'est pas encore implémentée.";
+}
