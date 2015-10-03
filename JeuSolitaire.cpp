@@ -22,41 +22,49 @@ JeuSolitaire::JeuSolitaire()
 void JeuSolitaire::jouer()
 {
 	bool termine = false;
-	while (!solitaire.verifieGagne() || termine)
+	int i = 0;
+	while (true)
 	{
-		std::cout << solitaire  <<"\n";
-		std::cout << menu;
-		std::string reponse;
-		std::cin >> reponse;
-		if (reponse == "1")
-		{
-			solitaire.avancerTalon();
-		}
-		else if (reponse == "2")
-		{
-			menuDeplacerCarteTalonVersColonne();
-		}
-		else if (reponse == "3")
-		{
-			menuDeplacerCarteTalonVersPile();
-		}
-		else if (reponse == "4")
-		{
-			menuDeplacerCarteColonneVersColonne();
-		}
-		else if (reponse == "5")
-		{
-			menuDeplacerCarteColonneVersPile();
-		}
-		else if (reponse == "6")
-		{
-			termine=true;
-		}
-		else
-		{
-			std::cout << "Choix invalide \n\n";
-		}
+		std::cout << i << std::endl;
+		std::cout << "Valeur :: " << menuSelectionnerColonneSource() << std::endl;
+		i++;
 	}
+
+	/*while (!solitaire.verifieGagne() || termine)
+	{
+	std::cout << solitaire  <<"\n";
+	std::cout << menu;
+	std::string reponse;
+	std::cin >> reponse;
+	if (reponse == "1")
+	{
+	solitaire.avancerTalon();
+	}
+	else if (reponse == "2")
+	{
+	menuDeplacerCarteTalonVersColonne();
+	}
+	else if (reponse == "3")
+	{
+	menuDeplacerCarteTalonVersPile();
+	}
+	else if (reponse == "4")
+	{
+	menuDeplacerCarteColonneVersColonne();
+	}
+	else if (reponse == "5")
+	{
+	menuDeplacerCarteColonneVersPile();
+	}
+	else if (reponse == "6")
+	{
+	termine=true;
+	}
+	else
+	{
+	std::cout << "Choix invalide \n\n";
+	}
+	}*/
 }
 
 void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
@@ -84,20 +92,69 @@ void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 
 int JeuSolitaire::menuSelectionnerColonneSource()
 {
-	std::cout << "menuSelectionnerColonneSource n'est pas encore implémentée.";
+	std::string valeurEntree;
+	int valeurEntiereEntree;
+	while (valeurEntree.length() != 1 
+		   || ( !(0 <= valeurEntiereEntree && valeurEntiereEntree <= 6) 
+		   && valeurEntree != "q" && valeurEntree != "Q" ))
+	{
+		valeurEntiereEntree = -1;
+		std::cout << "\nEntrer le numero de la colonne d'origine [0,6] ou 'q' pour quitter : ";
+		std::getline(std::cin, valeurEntree);
+
+	}
+	return valeurEntiereEntree;
 }
 
 int JeuSolitaire::menuSelectionnerColonneDestination()
 {
 	std::cout << "menuSelectionnerColonneDestination n'est pas encore implémentée.";
+	return -1;
 }
 
 int JeuSolitaire::menuSelectionnerPileDestination()
 {
 	std::cout << "menuSelectionnerPile n'est pas encore implémentée.";
+	return -1;
 }
 
 int JeuSolitaire::menuSelectionnerNombreCartes()
 {
 	std::cout << "menuSelectionnerNombreCartes n'est pas encore implémentée.";
+	return -1;
+}
+
+/***
+Cette fonction va tenter d'effectué une conversion d'un caractère et mettre le resultat dans la valeur en référence.
+Les caractères q et Q sont acceptés et mettent -1 dans la valeurEntière.
+Le caractère doit être entier et situé entre les deux paramètres "debutPortee" et "finPortee"
+
+La fonction retourne true si le caractère entrée et valide, sinon false.
+
+*/
+bool JeuSolitaire::convertirEntreeEnIntAvecValidation(std::string caractereEntree, int& valeurEntiereEntree, const int debutPortee , const int finPortee)
+{
+	if (caractereEntree.length() != 1)
+	{
+		return false;
+	}
+	else if (caractereEntree != "q" && caractereEntree != "Q" )
+	{
+		valeurEntiereEntree = -1;
+		return true;
+	}
+	else
+	{
+		std::stringstream(caractereEntree) >> valeurEntiereEntree;
+		if ( !(debutPortee <= valeurEntiereEntree && valeurEntiereEntree <= finPortee) )
+		{
+			return true;
+		}
+		else
+		{
+			valeurEntiereEntree = -1;
+			return false;
+		}
+	}
+	return false;
 }
