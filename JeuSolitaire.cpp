@@ -145,7 +145,7 @@ bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string p_caract
 	{
 		return false;
 	}
-	// Bon... mon == arrêtes de fonctionner pour les strings rendu ici dans le code... Je trouve un bypass... 
+	// Bon... mon == arrête de fonctionner pour les strings rendu ici dans le code... Je trouve un bypass... 
 	// Preuve: http://i.imgur.com/WX3eGA3.png
 	else if (p_caractereEntree.compare("q") == 0 || p_caractereEntree.compare("Q") == 0)
 	{

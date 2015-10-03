@@ -12,6 +12,7 @@
 
 #include "Sorte.h"
 #include "Valeur.h"
+#include "ContratException.h"
 
 class Carte
 {

@@ -1,9 +1,9 @@
 /*
- * ColonneCartes.cpp
- *
- *  Created on: 2015-09-24
- *      Author: etudiant
- */
+* ColonneCartes.cpp
+*
+*  Created on: 2015-09-24
+*      Author: etudiant
+*/
 
 #include "ColonneCartes.h"
 
@@ -17,43 +17,34 @@ void ColonneCartes::initColonneCartes (std::vector<Carte>& p_listeCartes)
 {
 	this->m_lesCartes.clear();
 	this->m_lesCartes = p_listeCartes;
+	POSTCONDITION(this->m_lesCartes.size() == p_listeCartes.size());
 }
 
 void ColonneCartes::ajoute (const Carte&  p_carte)
 {
-	if (this->peutAjouterCarte(p_carte))
-	{
-		this->m_lesCartes.push_back (p_carte);
-		this->m_nbCartesVisibles++;
-	}
+	PRECONDITION(this->peutAjouterCarte(p_carte));
+	this->m_lesCartes.push_back (p_carte);
+	this->changerNombreCarteVisible(1);
 }
 
 void ColonneCartes::deplacePaquet (ColonneCartes& p_destination, int p_nombreCartes)
 {
-	if (p_nombreCartes <= this->reqNbCartesVisibles())
+	PRECONDITION(p_nombreCartes > 0);
+	PRECONDITION(p_nombreCartes <= this->reqNbCartesVisibles());
+	std::vector<Carte>::iterator derniereCarteADeplacer = this->m_lesCartes.end() - p_nombreCartes;
+	PRECONDITION(p_destination.peutAjouterCarte(*derniereCarteADeplacer));
+	for (std::vector<Carte>::iterator iter = derniereCarteADeplacer; iter != this->m_lesCartes.end();)
 	{
-		std::vector<Carte>::iterator derniereCarteADeplacer = this->m_lesCartes.end() - p_nombreCartes;
-		if (p_destination.peutAjouterCarte(*derniereCarteADeplacer))
-		{
-			for (std::vector<Carte>::iterator iter = derniereCarteADeplacer; iter != this->m_lesCartes.end();)
-			{
-				p_destination.m_lesCartes.push_back(*iter);
-				p_destination.m_nbCartesVisibles++;
-
-				this->m_lesCartes.erase(iter);
-				this->m_nbCartesVisibles--;
-			}
-		}
+		p_destination.ajoute(*iter);
+		this->supprimeDerniereCarte();
 	}
 }
 
 void ColonneCartes::supprimeDerniereCarte ()
 {
-	if (!this->m_lesCartes.empty())
-	{
-		this->m_lesCartes.pop_back();
-		this->m_nbCartesVisibles--;
-	}
+	PRECONDITION(!this->m_lesCartes.empty());
+	this->m_lesCartes.pop_back();
+	this->changerNombreCarteVisible(-1);
 }
 
 int ColonneCartes::reqNbCartesVisibles () const
