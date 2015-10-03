@@ -24,7 +24,7 @@ void JeuSolitaire::jouer()
 	bool termine = false;
 	int i = 0;
 
-	while (!m_solitaire.verifieGagne() || termine)
+	while (!m_solitaire.verifieGagne() && !termine)
 	{
 		std::cout << this->m_solitaire  <<"\n";
 		std::cout << this->m_menu;

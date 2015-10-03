@@ -27,8 +27,10 @@ void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_c
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(this->m_colonnes[p_colonneSource].reqNbCartesVisibles() >= p_nbCartes);
-	PRECONDITION(!this->reqDessusColonne(p_colonneDestination).estMemeCouleur(*this->m_colonnes[p_colonneSource].reqLesCartes().end().operator-(p_nbCartes)));
-	PRECONDITION(this->m_colonnes[p_colonneDestination].reqLesCartes().back().estSuivante(*this->m_colonnes[p_colonneSource].reqLesCartes().end().operator-(p_nbCartes)));
+	PRECONDITION(this->reqColonne(p_colonneDestination).reqLesCartes().size() == 0 || !this->reqDessusColonne(p_colonneDestination).estMemeCouleur(this->reqCartePositionColonne(p_colonneSource, p_nbCartes)));
+	PRECONDITION(this->reqColonne(p_colonneDestination).reqLesCartes().size() == 0 || this->reqDessusColonne(p_colonneDestination).estSuivante(this->reqCartePositionColonne(p_colonneSource, p_nbCartes)));
+	PRECONDITION(this->reqColonne(p_colonneDestination).reqLesCartes().size() > 0 || this->reqCartePositionColonne(p_colonneSource, p_nbCartes).reqValeur() == ROI);
+
 	this->m_colonnes[p_colonneSource].deplacePaquet(this->m_colonnes[p_colonneDestination], p_nbCartes);
 }
 
@@ -37,8 +39,9 @@ void Solitaire::deplacerTalonAColonne (const int p_colonneDestination)
 	PRECONDITION(p_colonneDestination >= 0);
 	PRECONDITION(p_colonneDestination <= 6);
 	PRECONDITION(this->m_talon.size() > 0);
-	PRECONDITION(!this->m_talon.front().estMemeCouleur(this->m_colonnes[p_colonneDestination].reqLesCartes().back()));
-	PRECONDITION(this->m_colonnes[p_colonneDestination].reqLesCartes().back().estSuivante(this->m_talon.front()));
+	PRECONDITION(this->reqColonne(p_colonneDestination).reqLesCartes().size() == 0 || !this->reqDessusTalon().estMemeCouleur(this->reqDessusColonne(p_colonneDestination)));
+	PRECONDITION(this->reqColonne(p_colonneDestination).reqLesCartes().size() == 0 || this->reqDessusColonne(p_colonneDestination).estSuivante(this->reqDessusTalon()));
+	PRECONDITION(this->reqColonne(p_colonneDestination).reqLesCartes().size() > 0 || this->reqDessusTalon().reqValeur() == ROI);
 
 	this->m_colonnes[p_colonneDestination].ajoute(this->m_talon.front());
 	this->m_talon.pop_front();
@@ -49,11 +52,11 @@ void Solitaire::deplacerTalonAPile (const int p_pileDestination)
 	PRECONDITION(p_pileDestination >= 0);
 	PRECONDITION(p_pileDestination <= 3);
 	PRECONDITION(this->m_talon.size() > 0);
-	PRECONDITION(this->m_piles[p_pileDestination].size() > 0 && !this->m_talon.front().estMemeCouleur(this->m_piles[p_pileDestination].top()));
-	PRECONDITION(this->m_piles[p_pileDestination].size() > 0 && this->m_piles[p_pileDestination].top().estSuivante(this->m_talon.front()));
-	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 && this->m_talon.front().reqValeur() == ROI);
+	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 || !this->reqDessusTalon().estMemeCouleur(this->reqDessusPile(p_pileDestination)));
+	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 || this->reqDessusPile(p_pileDestination).estSuivante(this->reqDessusTalon()));
+	PRECONDITION(this->m_piles[p_pileDestination].size() > 0 || this->reqDessusTalon().reqValeur() == AS);
 
-	this->m_piles[p_pileDestination].push(this->m_talon.front());
+	this->m_piles[p_pileDestination].push(this->reqDessusTalon());
 	this->m_talon.pop_front();
 }
 
@@ -65,10 +68,11 @@ void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pil
 	PRECONDITION(p_colonneSource <= 6);
 
 	PRECONDITION(this->m_colonnes[p_colonneSource].reqLesCartes().size() > 0);
-	PRECONDITION(!this->m_colonnes[p_colonneSource].reqLesCartes().front().estMemeCouleur(reqDessusPile(p_pileDestination)));
-	PRECONDITION(this->m_piles[p_pileDestination].top().estSuivante(this->m_colonnes[p_colonneSource].reqLesCartes().front()));
+	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 || !this->reqDessusColonne(p_colonneSource).estMemeCouleur(this->reqDessusPile(p_pileDestination)));
+	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 || this->reqDessusPile(p_pileDestination).estSuivante(this->reqDessusColonne(p_colonneSource)));
+	PRECONDITION(this->m_piles[p_pileDestination].size() > 0 ||	this->reqDessusColonne(p_colonneSource).reqValeur() == AS);
 
-	this->m_piles[p_pileDestination].push(this->m_colonnes[p_colonneSource].reqLesCartes().back());
+	this->m_piles[p_pileDestination].push(this->reqDessusColonne(p_colonneSource));
 	this->m_colonnes[p_colonneSource].supprimeDerniereCarte();
 }
 
@@ -173,7 +177,7 @@ Carte& Solitaire::reqDessusPile(int p_numeroPile)
 {
 	PRECONDITION(p_numeroPile >= 0);
 	PRECONDITION(p_numeroPile <= 3);
-	
+
 	return this->m_piles[p_numeroPile].top();
 }
 
