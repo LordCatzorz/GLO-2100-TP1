@@ -11,12 +11,12 @@
 #include <iostream>
 #include <sstream>
 
-const std::string JeuSolitaire::menu = "*******************************************\n      Menu\n*******************************************\n 1. Prochaine carte du talon.\n 2. Deplacer une carte du talon vers une colonne.\n 3. Deplacer une carte du talon vers une pile.\n 4. Deplacer une(des) carte(s) d'une colonne\n    vers une autre.\n 5. Deplacer une carte d'une colonne vers une pile.\n 6. Quitter.\n*******************************************\nVotre choix :\n";
+const std::string JeuSolitaire::m_menu = "*******************************************\n      Menu\n*******************************************\n 1. Prochaine carte du talon.\n 2. Deplacer une carte du talon vers une colonne.\n 3. Deplacer une carte du talon vers une pile.\n 4. Deplacer une(des) carte(s) d'une colonne\n    vers une autre.\n 5. Deplacer une carte d'une colonne vers une pile.\n 6. Quitter.\n*******************************************\nVotre choix :\n";
 
 
 JeuSolitaire::JeuSolitaire()
 {
-	solitaire = Solitaire();
+	this->m_solitaire = Solitaire();
 }
 
 void JeuSolitaire::jouer()
@@ -24,15 +24,15 @@ void JeuSolitaire::jouer()
 	bool termine = false;
 	int i = 0;
 
-	while (!solitaire.verifieGagne() || termine)
+	while (!m_solitaire.verifieGagne() || termine)
 	{
-		std::cout << solitaire  <<"\n";
-		std::cout << menu;
+		std::cout << this->m_solitaire  <<"\n";
+		std::cout << this->m_menu;
 		std::string reponse;
 		std::getline (std::cin, reponse);
 		if (reponse == "1")
 		{
-			solitaire.avancerTalon();
+			this->m_solitaire.avancerTalon();
 		}
 		else if (reponse == "2")
 		{
@@ -64,11 +64,19 @@ void JeuSolitaire::jouer()
 void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
 {
 	int colonneDestination = menuSelectionnerColonneDestination();
+	if (colonneDestination != -1)
+	{
+		this->m_solitaire.deplacerTalonAColonne(colonneDestination);
+	}
 }
 
 void JeuSolitaire::menuDeplacerCarteTalonVersPile()
 {
-	int pileDestination =menuSelectionnerPileDestination();
+	int pileDestination = menuSelectionnerPileDestination();
+	if (pileDestination != -1)
+	{
+		this->m_solitaire.deplacerTalonAPile(pileDestination);
+	}
 }
 
 void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
@@ -82,7 +90,7 @@ void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 			int nombreCartes = menuSelectionnerNombreCartes();
 			if (nombreCartes != -1)
 			{
-				throw "On s'est rendu au bout, mais on a pas fini!";
+				this->m_solitaire.deplacerColonneAColonne(colonneSource, colonneDestination, nombreCartes);
 			}
 		}
 	}
@@ -91,7 +99,14 @@ void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 {
 	int colonneSource = menuSelectionnerColonneSource();
-	int pileDestination = menuSelectionnerPileDestination();
+	if (colonneSource != -1)
+	{
+		int pileDestination = menuSelectionnerPileDestination();
+		if (pileDestination != -1)
+		{
+			this->m_solitaire.deplacerColonneAPile(colonneSource, pileDestination);
+		}
+	}
 }
 
 int JeuSolitaire::menuSelectionnerColonneSource()
@@ -122,24 +137,24 @@ Le caractère doit être entier et situé entre les deux paramètres "debutPorte
 La fonction retourne true si le caractère entrée et valide, sinon false.
 
 */
-bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string caractereEntree, int& valeurEntiereEntree, const int debutPortee , const int finPortee, const int maxNombreCaractere)
+bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string p_caractereEntree, int& p_valeurEntiereEntree, const int p_debutPortee , const int p_finPortee, const int p_maxNombreCaractere)
 {
 
-	valeurEntiereEntree = -1;
-	if (caractereEntree.length() == 0 || caractereEntree.length() > maxNombreCaractere)
+	p_valeurEntiereEntree = -1;
+	if (p_caractereEntree.length() == 0 || p_caractereEntree.length() > p_maxNombreCaractere)
 	{
 		return false;
 	}
-	// Bon... mon == a arrêté de fonctionner pour les strings... Je trouve un bypass... 
+	// Bon... mon == arrêtes de fonctionner pour les strings rendu ici dans le code... Je trouve un bypass... 
 	// Preuve: http://i.imgur.com/WX3eGA3.png
-	else if (caractereEntree.compare("q") == 0 || caractereEntree.compare("Q") == 0)
+	else if (p_caractereEntree.compare("q") == 0 || p_caractereEntree.compare("Q") == 0)
 	{
 		return true;
 	}
 	else
 	{
-		std::stringstream(caractereEntree) >> valeurEntiereEntree;
-		if (debutPortee <= valeurEntiereEntree && valeurEntiereEntree <= finPortee )
+		std::stringstream(p_caractereEntree) >> p_valeurEntiereEntree;
+		if (p_debutPortee <= p_valeurEntiereEntree && p_valeurEntiereEntree <= p_finPortee )
 		{
 			return true;
 		}
@@ -151,14 +166,14 @@ bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string caracter
 
 }
 
-int JeuSolitaire::afficherSousMenuAvecSelection(const std::string message, const int debutPorteeValeur, const int finPorteeValeur, int maxNombreCaractere)
+int JeuSolitaire::afficherSousMenuAvecSelection(const std::string p_message, const int p_debutPorteeValeur, const int p_finPorteeValeur, int p_maxNombreCaractere)
 {
 	std::string valeurEntree;
 	int valeurEntiereEntree;
-	while (!this->convertirStringEnIntAvecValidation(valeurEntree,valeurEntiereEntree,debutPorteeValeur,finPorteeValeur,maxNombreCaractere))
+	while (!this->convertirStringEnIntAvecValidation(valeurEntree,valeurEntiereEntree,p_debutPorteeValeur,p_finPorteeValeur,p_maxNombreCaractere))
 	{
 		valeurEntiereEntree = -1;
-		std::cout << "\n" << message << " [" << debutPorteeValeur << ", " << finPorteeValeur << "] ou 'q' pour quitter : ";
+		std::cout << "\n" << p_message << " [" << p_debutPorteeValeur << ", " << p_finPorteeValeur << "] ou 'q' pour quitter : ";
 		std::getline(std::cin, valeurEntree);
 	}
 	return valeurEntiereEntree;

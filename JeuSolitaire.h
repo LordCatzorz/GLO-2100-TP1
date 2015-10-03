@@ -15,8 +15,8 @@ public:
 	JeuSolitaire();
 	void jouer();
 private:
-	Solitaire solitaire;
-	static const std::string menu;
+	Solitaire m_solitaire;
+	static const std::string m_menu;
 
 	void menuDeplacerCarteTalonVersColonne();
 	void menuDeplacerCarteTalonVersPile();
