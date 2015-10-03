@@ -15,7 +15,6 @@
 class ColonneCartes
 {
 public:
-		std::vector<Carte> m_lesCartes;
 
 		ColonneCartes();
 
@@ -30,9 +29,11 @@ public:
 		int reqNbCartesVisibles () const;
 
 		friend std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCartes);
+		const std::vector<Carte>& reqLesCartes() const;
 
 private:
 		int m_nbCartesVisibles;
+		std::vector<Carte> m_lesCartes;
 
 		Carte& obtenirCarteDessus () const;
 		bool peutAjouterCarte(const Carte& p_carte) const;

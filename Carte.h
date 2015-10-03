@@ -19,9 +19,9 @@ class Carte
 public:
 	Carte (Valeur p_valeur, Sorte p_sorte);
 
-	const bool estSuivante(const Carte& p_carte);
+	const bool estSuivante(const Carte& p_carte) const;
 
-	const bool estMemeCouleur(const Carte& p_carte);
+	const bool estMemeCouleur(const Carte& p_carte) const;
 
 	friend std::ostream& operator<< (std::ostream& sortie, const Carte& p_carte);
 

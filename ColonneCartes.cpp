@@ -115,3 +115,8 @@ void ColonneCartes::changerNombreCarteVisible(const int p_differenceNbCarte)
 	}
 }
 
+const std::vector<Carte>& ColonneCartes::reqLesCartes() const
+{
+	return this->m_lesCartes;
+}
+

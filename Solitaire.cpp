@@ -27,8 +27,8 @@ void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_c
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(this->m_colonnes[p_colonneSource].reqNbCartesVisibles() >= p_nbCartes);
-	PRECONDITION(!this->m_colonnes[p_colonneDestination].m_lesCartes.back().estMemeCouleur(*this->m_colonnes[p_colonneSource].m_lesCartes.end().operator-(p_nbCartes)));
-	PRECONDITION(this->m_colonnes[p_colonneDestination].m_lesCartes.back().estSuivante(*this->m_colonnes[p_colonneSource].m_lesCartes.end().operator-(p_nbCartes)));
+	PRECONDITION(!this->m_colonnes[p_colonneDestination].reqLesCartes().back().estMemeCouleur(*this->m_colonnes[p_colonneSource].reqLesCartes().end().operator-(p_nbCartes)));
+	PRECONDITION(this->m_colonnes[p_colonneDestination].reqLesCartes().back().estSuivante(*this->m_colonnes[p_colonneSource].reqLesCartes().end().operator-(p_nbCartes)));
 	this->m_colonnes[p_colonneSource].deplacePaquet(this->m_colonnes[p_colonneDestination], p_nbCartes);
 }
 
@@ -37,8 +37,8 @@ void Solitaire::deplacerTalonAColonne (const int p_colonneDestination)
 	PRECONDITION(p_colonneDestination > 0);
 	PRECONDITION(p_colonneDestination <= 6);
 	PRECONDITION(this->m_talon.size() > 0);
-	PRECONDITION(!this->m_talon.front().estMemeCouleur(this->m_colonnes[p_colonneDestination].m_lesCartes.back()));
-	PRECONDITION(this->m_colonnes[p_colonneDestination].m_lesCartes.back().estSuivante(this->m_talon.front()));
+	PRECONDITION(!this->m_talon.front().estMemeCouleur(this->m_colonnes[p_colonneDestination].reqLesCartes().back()));
+	PRECONDITION(this->m_colonnes[p_colonneDestination].reqLesCartes().back().estSuivante(this->m_talon.front()));
 	
 	this->m_colonnes[p_colonneDestination].ajoute(this->m_talon.front());
 	this->m_talon.pop_front();
@@ -63,11 +63,11 @@ void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pil
 	PRECONDITION(p_colonneSource > 0);
 	PRECONDITION(p_colonneSource <= 6);
 
-	PRECONDITION(this->m_colonnes[p_colonneSource].m_lesCartes.size() > 0);
-	PRECONDITION(!this->m_colonnes[p_colonneSource].m_lesCartes.front().estMemeCouleur(this->m_piles[p_pileDestination].top()));
-	PRECONDITION(this->m_piles[p_pileDestination].top().estSuivante(this->m_colonnes[p_colonneSource].m_lesCartes.front()));
+	PRECONDITION(this->m_colonnes[p_colonneSource].reqLesCartes().size() > 0);
+	PRECONDITION(!this->m_colonnes[p_colonneSource].reqLesCartes().front().estMemeCouleur(this->m_piles[p_pileDestination].top()));
+	PRECONDITION(this->m_piles[p_pileDestination].top().estSuivante(this->m_colonnes[p_colonneSource].reqLesCartes().front()));
 
-	this->m_piles[p_pileDestination].push(this->m_colonnes[p_colonneSource].m_lesCartes.back());
+	this->m_piles[p_pileDestination].push(this->m_colonnes[p_colonneSource].reqLesCartes().back());
 	this->m_colonnes[p_colonneSource].supprimeDerniereCarte();
 }
 

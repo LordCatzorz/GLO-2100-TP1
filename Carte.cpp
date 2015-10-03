@@ -17,12 +17,12 @@ Carte::Carte (Valeur p_valeur, Sorte p_sorte)
 	this->m_sorte = p_sorte;
 }
 
-const bool Carte::estSuivante(const Carte& p_carte)
+const bool Carte::estSuivante(const Carte& p_carte) const
 {
 	return this->reqValeur() == p_carte.reqValeur() + 1;
 }
 
-const bool Carte::estMemeCouleur(const Carte& p_carte)
+const bool Carte::estMemeCouleur(const Carte& p_carte) const
 {
 	return this->estCouleurNoir() == p_carte.estCouleurNoir();
 }
