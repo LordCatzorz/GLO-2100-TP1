@@ -34,7 +34,19 @@ void JeuSolitaire::jouer()
 		}
 		else if (reponse == "2")
 		{
-			//Déplacer carte talon vers colonne
+			menuDeplacerCarteTalonVersColonne();
+		}
+		else if (reponse == "3")
+		{
+			menuDeplacerCarteTalonVersPile();
+		}
+		else if (reponse == "4")
+		{
+			menuDeplacerCarteColonneVersColonne();
+		}
+		else if (reponse == "5")
+		{
+			menuDeplacerCarteColonneVersPile();
 		}
 		else if (reponse == "6")
 		{
@@ -45,9 +57,24 @@ void JeuSolitaire::jouer()
 			std::cout << "Choix invalide \n\n";
 		}
 	}
+}
 
+void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
+{
+	std::cout << "menuDeplacerCarteTalonVersColonne n'est pas encore implémentée";
+}
 
+void JeuSolitaire::menuDeplacerCarteTalonVersPile()
+{
+	std::cout << "menuDeplacerCarteTalonVersPile n'est pas encore implémentée";
+}
 
+void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
+{
+	std::cout << "menuDeplacerCarteColonneVersColonne n'est pas encore implémentée";
+}
 
-
+void JeuSolitaire::menuDeplacerCarteColonneVersPile()
+{
+	std::cout << "menuDeplacerCarteColonneVersPile n'est pas encore implémentée";
 }
