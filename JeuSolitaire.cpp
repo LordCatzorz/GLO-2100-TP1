@@ -96,54 +96,22 @@ void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 
 int JeuSolitaire::menuSelectionnerColonneSource()
 {
-	std::string valeurEntree;
-	int valeurEntiereEntree;
-	while (!this->convertirStringEnIntAvecValidation(valeurEntree,valeurEntiereEntree,0,6,1))
-	{
-		valeurEntiereEntree = -1;
-		std::cout << "\nEntrer le numero de la colonne d'origine [0,6] ou 'q' pour quitter : ";
-		std::getline(std::cin, valeurEntree);
-	}
-	return valeurEntiereEntree;
+	return this->afficherSousMenuAvecSelection("Entrer le numero de la colonne d'origine", 0, 6, 1);
 }
 
 int JeuSolitaire::menuSelectionnerColonneDestination()
 {
-	std::string valeurEntree;
-	int valeurEntiereEntree;
-	while (!this->convertirStringEnIntAvecValidation(valeurEntree,valeurEntiereEntree,0,6,1))
-	{
-		valeurEntiereEntree = -1;
-		std::cout << "\nEntrer le numero de la colonne destination [0,6] ou 'q' pour quitter : ";
-		std::getline(std::cin, valeurEntree);
-	}
-	return valeurEntiereEntree;
+	return this->afficherSousMenuAvecSelection("Entrer le numero de la colonne destination", 0, 6, 1);
 }
 
 int JeuSolitaire::menuSelectionnerPileDestination()
 {
-	std::string valeurEntree;
-	int valeurEntiereEntree;
-	while (!this->convertirStringEnIntAvecValidation(valeurEntree,valeurEntiereEntree,0,3,1))
-	{
-		valeurEntiereEntree = -1;
-		std::cout << "\nEntrer le numero de la pile destination [0,3] ou 'q' pour quitter : ";
-		std::getline(std::cin, valeurEntree);
-	}
-	return valeurEntiereEntree;
+	return this->afficherSousMenuAvecSelection("Entrer le numero de la pile destination", 0, 3, 1);
 }
 
 int JeuSolitaire::menuSelectionnerNombreCartes()
 {
-	std::string valeurEntree;
-	int valeurEntiereEntree;
-	while (!this->convertirStringEnIntAvecValidation(valeurEntree,valeurEntiereEntree,1,13,2))
-	{
-		valeurEntiereEntree = -1;
-		std::cout << "\nEntrer le numero le nombre de carte a déplacer [1,13] ou 'q' pour quitter : ";
-		std::getline(std::cin, valeurEntree);
-	}
-	return valeurEntiereEntree;
+	return this->afficherSousMenuAvecSelection("Entrer le numero le nombre de carte a déplacer", 1, 13, 2);
 }
 
 /***
@@ -180,4 +148,18 @@ bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string caracter
 			return false;
 		}
 	}
+
+}
+
+int JeuSolitaire::afficherSousMenuAvecSelection(const std::string message, const int debutPorteeValeur, const int finPorteeValeur, int maxNombreCaractere)
+{
+	std::string valeurEntree;
+	int valeurEntiereEntree;
+	while (!this->convertirStringEnIntAvecValidation(valeurEntree,valeurEntiereEntree,debutPorteeValeur,finPorteeValeur,maxNombreCaractere))
+	{
+		valeurEntiereEntree = -1;
+		std::cout << "\n" << message << " [" << debutPorteeValeur << ", " << finPorteeValeur << "] ou 'q' pour quitter : ";
+		std::getline(std::cin, valeurEntree);
+	}
+	return valeurEntiereEntree;
 }

@@ -28,6 +28,8 @@ private:
 	int menuSelectionnerPileDestination();
 	int menuSelectionnerNombreCartes();
 
+	int afficherSousMenuAvecSelection(const std::string message, const int debutPorteeValeur, const int finPorteeValeur, int maxNombreCaractere);
+
 	bool convertirStringEnIntAvecValidation(std::string stringEntree, int& valeurEntiereEntree, const int debutPortee , const int finPortee, const int maxNombreCaractere);
 };
 
