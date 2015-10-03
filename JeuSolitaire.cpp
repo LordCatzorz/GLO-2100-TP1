@@ -82,7 +82,7 @@ void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 			int nombreCartes = menuSelectionnerNombreCartes();
 			if (nombreCartes != -1)
 			{
-
+				throw "On s'est rendu au bout, mais on a pas fini!";
 			}
 		}
 	}
