@@ -32,7 +32,14 @@ void JeuSolitaire::jouer()
 		std::getline (std::cin, reponse);
 		if (reponse == "1")
 		{
-			this->m_solitaire.avancerTalon();
+			if (!this->m_solitaire.estVideTalon())
+			{
+				this->m_solitaire.avancerTalon();
+			}
+			else
+			{
+				afficherMessageCoupNonValide();
+			}
 		}
 		else if (reponse == "2")
 		{

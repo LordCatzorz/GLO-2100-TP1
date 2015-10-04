@@ -87,7 +87,15 @@ std::string Solitaire::reqEtatJeu () const
 {
 	std::ostringstream etatJeu;
 	//Talon
-	etatJeu << "Talon: " << this->m_talon.front();
+	etatJeu << "Talon: ";
+	if (this->estVideTalon())
+	{
+		etatJeu << "X";
+	}
+	else
+	{ 
+		etatJeu << this->m_talon.front();
+	}
 
 	//Pile
 	etatJeu << "             Piles ";
@@ -127,13 +135,12 @@ void Solitaire::initialiserTalon()
 		for (int j = 1; j <= 13; j++) // Valeurs
 		{
 			Carte carte((Valeur) j, (Sorte) i);
-			this->m_talon.push_back(carte);
+			this->m_talon.push_front(carte);
 		}
 	}
+	//srand((unsigned int)time(0));
 
-	srand((unsigned int)time(0));
-
-	std::random_shuffle(this->m_talon.begin(), this->m_talon.end());
+	//std::random_shuffle(this->m_talon.begin(), this->m_talon.end());
 }
 
 void Solitaire::initialiserColonnes()
