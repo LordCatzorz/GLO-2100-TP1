@@ -29,6 +29,7 @@ private:
 	int menuSelectionnerNombreCartes();
 
 	int afficherSousMenuAvecSelection(const std::string p_message, const int p_debutPorteeValeur, const int p_finPorteeValeur, int p_maxNombreCaractere);
+	void afficherMessageCoupNonValide();
 
 	bool convertirStringEnIntAvecValidation(std::string p_stringEntree, int& p_valeurEntiereEntree, const int p_debutPortee , const int p_finPortee, const int p_maxNombreCaractere);
 	

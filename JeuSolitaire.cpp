@@ -70,6 +70,10 @@ void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
 		{
 			this->m_solitaire.deplacerTalonAColonne(colonneDestination);
 		}
+		else
+		{
+			this->afficherMessageCoupNonValide();
+		}
 	}
 }
 
@@ -81,6 +85,10 @@ void JeuSolitaire::menuDeplacerCarteTalonVersPile()
 		if (validerMouvementTalonVersPile(pileDestination))
 		{
 			this->m_solitaire.deplacerTalonAPile(pileDestination);
+		}
+		else
+		{
+			this->afficherMessageCoupNonValide();
 		}
 	}
 }
@@ -100,6 +108,10 @@ void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 				{
 					this->m_solitaire.deplacerColonneAColonne(colonneSource, colonneDestination, nombreCartes);
 				}
+				else
+				{
+					this->afficherMessageCoupNonValide();
+				}
 			}
 		}
 	}
@@ -116,6 +128,10 @@ void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 			if (validerMouvementColonneVersPile(colonneSource, pileDestination))
 			{
 				this->m_solitaire.deplacerColonneAPile(colonneSource, pileDestination);
+			}
+			else
+			{
+				this->afficherMessageCoupNonValide();
 			}
 		}
 	}
@@ -232,7 +248,7 @@ const bool JeuSolitaire::validerMouvementTalonVersPile(const int p_pile) const
 		if (!this->m_solitaire.estVidePile(p_pile))
 		{
 			const Carte& dessusPile = this->m_solitaire.reqDessusPile(p_pile);
-			if (!dessusTalon.estMemeCouleur(dessusPile))
+			if (!dessusTalon.reqSorte() == dessusPile.reqSorte())
 			{
 				if (dessusPile.estSuivante(dessusTalon))
 				{
@@ -265,7 +281,7 @@ const bool JeuSolitaire::validerMouvementColonneVersPile(const int p_colonneSour
 		if (!this->m_solitaire.estVidePile(p_pileDestination))
 		{
 			const Carte& dessusPile = this->m_solitaire.reqDessusPile(p_pileDestination);
-			if (!dessusColonne.estMemeCouleur(dessusPile))
+			if (!dessusColonne.reqSorte() == dessusPile.reqSorte())
 			{
 				if (dessusPile.estSuivante(dessusColonne))
 				{
@@ -275,7 +291,7 @@ const bool JeuSolitaire::validerMouvementColonneVersPile(const int p_colonneSour
 		}
 		else
 		{
-			if (dessusColonne.reqSorte() == AS)
+			if (dessusColonne.reqValeur() == AS)
 			{
 				return true;
 			}
@@ -317,3 +333,7 @@ const bool JeuSolitaire::validerMouvementColonneVersColonne(const int p_colonneS
 	return false;
 }
 
+void JeuSolitaire::afficherMessageCoupNonValide()
+{
+	std::cout << "\n!!! COUP NON VALIDE !!!\n";
+}

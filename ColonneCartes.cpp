@@ -34,11 +34,10 @@ void ColonneCartes::deplacePaquet (ColonneCartes& p_destination, int p_nombreCar
 {
 	PRECONDITION(p_nombreCartes > 0);
 	PRECONDITION(p_nombreCartes <= this->reqNbCartesVisibles());
-	std::vector<Carte>::iterator derniereCarteADeplacer = this->m_lesCartes.end() - p_nombreCartes;
-	PRECONDITION(this->estVide() || !this->reqCarteDessus().estMemeCouleur(*derniereCarteADeplacer));
-	PRECONDITION(this->estVide() || this->reqCarteDessus().estSuivante(*derniereCarteADeplacer));
-	PRECONDITION(!this->estVide() || derniereCarteADeplacer->reqValeur() == ROI);
-	for (std::vector<Carte>::iterator iter = derniereCarteADeplacer; iter != this->m_lesCartes.end();iter++)
+	PRECONDITION(this->estVide() || !this->reqCarteDessus().estMemeCouleur(this->reqCartePosition(p_nombreCartes)));
+	PRECONDITION(this->estVide() || this->reqCarteDessus().estSuivante(this->reqCartePosition(p_nombreCartes)));
+	PRECONDITION(!this->estVide() || this->reqCartePosition(p_nombreCartes).reqValeur() == ROI);
+	for (std::vector<Carte>::iterator iter = this->m_lesCartes.end() - p_nombreCartes; iter != this->m_lesCartes.end();iter++)
 	{
 		p_destination.ajoute(*iter);
 	}
@@ -73,9 +72,9 @@ std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCa
 		{
 			nbCarteCache =0;
 		}
-
+#if _DEBUG
 		nbCarteCache = 0;
-
+#endif
 		for (int i = 0; i < nbCarteCache; ++i)
 		{
 			sortie << "? ";
