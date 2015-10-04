@@ -250,7 +250,7 @@ const bool JeuSolitaire::validerMouvementTalonVersPile(const int p_pile) const
 			const Carte& dessusPile = this->m_solitaire.reqDessusPile(p_pile);
 			if (dessusTalon.reqSorte() == dessusPile.reqSorte())
 			{
-				if (dessusPile.estSuivante(dessusTalon))
+				if (dessusTalon.estSuivante(dessusPile))
 				{
 					return true;
 				}
@@ -283,7 +283,7 @@ const bool JeuSolitaire::validerMouvementColonneVersPile(const int p_colonneSour
 			const Carte& dessusPile = this->m_solitaire.reqDessusPile(p_pileDestination);
 			if (dessusColonne.reqSorte() == dessusPile.reqSorte())
 			{
-				if (dessusPile.estSuivante(dessusColonne))
+				if (dessusColonne.estSuivante(dessusPile))
 				{
 					return true;
 				}
