@@ -34,8 +34,8 @@ void ColonneCartes::deplacePaquet (ColonneCartes& p_destination, int p_nombreCar
 {
 	PRECONDITION(p_nombreCartes > 0);
 	PRECONDITION(p_nombreCartes <= this->reqNbCartesVisibles());
-	PRECONDITION(this->estVide() || !this->reqCarteDessus().estMemeCouleur(this->reqCartePosition(p_nombreCartes)));
-	PRECONDITION(this->estVide() || this->reqCarteDessus().estSuivante(this->reqCartePosition(p_nombreCartes)));
+	PRECONDITION(this->estVide() || !p_destination.reqCarteDessus().estMemeCouleur(this->reqCartePosition(p_nombreCartes)));
+	PRECONDITION(this->estVide() || p_destination.reqCarteDessus().estSuivante(this->reqCartePosition(p_nombreCartes)));
 	PRECONDITION(!this->estVide() || this->reqCartePosition(p_nombreCartes).reqValeur() == ROI);
 	for (std::vector<Carte>::iterator iter = this->m_lesCartes.end() - p_nombreCartes; iter != this->m_lesCartes.end();iter++)
 	{
