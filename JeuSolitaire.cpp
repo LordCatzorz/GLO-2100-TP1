@@ -24,6 +24,8 @@ void JeuSolitaire::jouer()
 	bool termine = false;
 	while (!termine)
 	{
+
+
 		while (!m_solitaire.verifieGagne() && !termine)
 		{
 			std::cout << this->m_solitaire  <<"\n";
@@ -68,7 +70,11 @@ void JeuSolitaire::jouer()
 		}
 		if (!termine)
 		{
-
+			termine = this->afficherMessageSucces();
+			if (!termine)
+			{
+				this->m_solitaire = Solitaire();
+			}
 		}
 	}
 }
@@ -358,7 +364,7 @@ const void JeuSolitaire::afficherMessageCoupNonValide() const
 
 const bool JeuSolitaire::afficherMessageSucces() const
 {
-	std::cout << "Vous avez gagné! Choisissez 'q' pour quitter ou entrer pour continuer.";
+	std::cout << "\n\nVous avez gagné!\n\nChoisissez 'q' pour quitter ou entrer pour continuer : ";
 	std::string valeurEntree;
 	std::getline(std::cin, valeurEntree);
 	if (valeurEntree.compare("q") || valeurEntree.compare("Q"))
