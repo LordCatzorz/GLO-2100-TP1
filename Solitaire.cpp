@@ -135,7 +135,7 @@ void Solitaire::initialiserTalon()
 		for (int j = 1; j <= 13; j++) // Valeurs
 		{
 			Carte carte((Valeur) j, (Sorte) i);
-			this->m_talon.push_front(carte);
+			this->m_talon.push_back(carte);
 		}
 	}
 	srand((unsigned int)time(0));
