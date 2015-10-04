@@ -138,9 +138,9 @@ void Solitaire::initialiserTalon()
 			this->m_talon.push_front(carte);
 		}
 	}
-	//srand((unsigned int)time(0));
+	srand((unsigned int)time(0));
 
-	//std::random_shuffle(this->m_talon.begin(), this->m_talon.end());
+	std::random_shuffle(this->m_talon.begin(), this->m_talon.end());
 }
 
 void Solitaire::initialiserColonnes()
