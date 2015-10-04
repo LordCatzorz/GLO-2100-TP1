@@ -258,7 +258,7 @@ const bool JeuSolitaire::validerMouvementTalonVersPile(const int p_pile) const
 		}
 		else
 		{
-			if (dessusTalon.reqSorte() == AS)
+			if (dessusTalon.reqValeur() == AS)
 			{
 				return true;
 			}
@@ -310,13 +310,13 @@ const bool JeuSolitaire::validerMouvementColonneVersColonne(const int p_colonneS
 	PRECONDITION(p_nombreCarte <=13);
 	if (!this->m_solitaire.estVideColonne(p_colonneSource))
 	{
-		const Carte& dessusColonneSource = this->m_solitaire.reqDessusColonne(p_colonneSource);
+		const Carte& dessousColonneSource = this->m_solitaire.reqCartePositionColonne(p_colonneSource, p_nombreCarte);
 		if (!this->m_solitaire.estVideColonne(p_colonneDestination))
 		{
 			const Carte& dessusColonneDestination = this->m_solitaire.reqDessusColonne(p_colonneDestination);
-			if (!dessusColonneDestination.estMemeCouleur(dessusColonneSource))
+			if (!dessusColonneDestination.estMemeCouleur(dessousColonneSource))
 			{
-				if (dessusColonneDestination.estSuivante(dessusColonneSource))
+				if (dessusColonneDestination.estSuivante(dessousColonneSource))
 				{
 					return true;
 				}
@@ -324,7 +324,7 @@ const bool JeuSolitaire::validerMouvementColonneVersColonne(const int p_colonneS
 		}
 		else
 		{
-			if (dessusColonneSource.reqSorte() == ROI)
+			if (dessousColonneSource.reqValeur() == ROI)
 			{
 				return true;
 			}

@@ -72,9 +72,7 @@ std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCa
 		{
 			nbCarteCache =0;
 		}
-#if _DEBUG
-		nbCarteCache = 0;
-#endif
+
 		for (int i = 0; i < nbCarteCache; ++i)
 		{
 			sortie << "? ";
