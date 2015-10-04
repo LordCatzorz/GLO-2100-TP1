@@ -220,3 +220,12 @@ const bool Solitaire::estVidePile(const int p_numeroPile) const
 	PRECONDITION(p_numeroPile <= 3);
 	return this->reqPile(p_numeroPile).size() == 0;
 }
+
+
+const int Solitaire::reqNombreCartesVisibles(const int p_numeroColonne) const
+{
+	PRECONDITION(p_numeroColonne >= 0);
+	PRECONDITION(p_numeroColonne <= 6);
+
+	return this->reqColonne(p_numeroColonne).reqNbCartesVisibles();
+}

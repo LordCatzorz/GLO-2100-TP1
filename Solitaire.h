@@ -48,6 +48,7 @@ public:
 	const bool estVideTalon() const;
 	const bool estVidePile(const int p_numeroPile) const;
 
+	const int reqNombreCartesVisibles(const int p_numeroColonne) const;
 	
 	const Carte& reqDessusPile(const int p_numeroPile) const;
 	const Carte& reqDessusTalon() const;

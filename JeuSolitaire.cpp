@@ -308,25 +308,30 @@ const bool JeuSolitaire::validerMouvementColonneVersColonne(const int p_colonneS
 	PRECONDITION(p_colonneDestination <=6);
 	PRECONDITION(p_nombreCarte > 0);
 	PRECONDITION(p_nombreCarte <=13);
-	if (!this->m_solitaire.estVideColonne(p_colonneSource))
+
+	if (!this->m_solitaire.reqNombreCartesVisibles(p_colonneSource) <= p_nombreCarte)
 	{
-		const Carte& dessousColonneSource = this->m_solitaire.reqCartePositionColonne(p_colonneSource, p_nombreCarte);
-		if (!this->m_solitaire.estVideColonne(p_colonneDestination))
+		if (!this->m_solitaire.estVideColonne(p_colonneSource))
 		{
-			const Carte& dessusColonneDestination = this->m_solitaire.reqDessusColonne(p_colonneDestination);
-			if (!dessusColonneDestination.estMemeCouleur(dessousColonneSource))
+			const Carte& dessousColonneSource = this->m_solitaire.reqCartePositionColonne(p_colonneSource, p_nombreCarte);
+
+			if (!this->m_solitaire.estVideColonne(p_colonneDestination))
 			{
-				if (dessusColonneDestination.estSuivante(dessousColonneSource))
+				const Carte& dessusColonneDestination = this->m_solitaire.reqDessusColonne(p_colonneDestination);
+				if (!dessusColonneDestination.estMemeCouleur(dessousColonneSource))
+				{
+					if (dessusColonneDestination.estSuivante(dessousColonneSource))
+					{
+						return true;
+					}
+				}
+			}
+			else
+			{
+				if (dessousColonneSource.reqValeur() == ROI)
 				{
 					return true;
 				}
-			}
-		}
-		else
-		{
-			if (dessousColonneSource.reqValeur() == ROI)
-			{
-				return true;
 			}
 		}
 	}
