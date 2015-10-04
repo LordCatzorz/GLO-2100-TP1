@@ -52,8 +52,8 @@ void Solitaire::deplacerTalonAPile (const int p_pileDestination)
 	PRECONDITION(p_pileDestination >= 0);
 	PRECONDITION(p_pileDestination <= 3);
 	PRECONDITION(!this->estVideTalon());
-	PRECONDITION(this->estVidePile(p_pileDestination) || !this->reqDessusTalon().estMemeCouleur(this->reqDessusPile(p_pileDestination)));
-	PRECONDITION(this->estVidePile(p_pileDestination) || this->reqDessusPile(p_pileDestination).estSuivante(this->reqDessusTalon()));
+	PRECONDITION(this->estVidePile(p_pileDestination) || this->reqDessusTalon().estMemeCouleur(this->reqDessusPile(p_pileDestination)));
+	PRECONDITION(this->estVidePile(p_pileDestination) || this->reqDessusTalon().estSuivante(this->reqDessusPile(p_pileDestination)));
 	PRECONDITION(!this->estVidePile(p_pileDestination) || this->reqDessusTalon().reqValeur() == AS);
 
 	this->m_piles[p_pileDestination].push(this->reqDessusTalon());
@@ -67,8 +67,8 @@ void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pil
 	PRECONDITION(p_colonneSource >= 0);
 	PRECONDITION(p_colonneSource <= 6);
 	PRECONDITION(!this->estVideColonne(p_colonneSource));
-	PRECONDITION(this->estVidePile(p_pileDestination) || !this->reqDessusColonne(p_colonneSource).estMemeCouleur(this->reqDessusPile(p_pileDestination)));
-	PRECONDITION(this->estVidePile(p_pileDestination) || this->reqDessusPile(p_pileDestination).estSuivante(this->reqDessusColonne(p_colonneSource)));
+	PRECONDITION(this->estVidePile(p_pileDestination) || this->reqDessusColonne(p_colonneSource).estMemeCouleur(this->reqDessusPile(p_pileDestination)));
+	PRECONDITION(this->estVidePile(p_pileDestination) || this->reqDessusColonne(p_colonneSource).estSuivante(this->reqDessusPile(p_pileDestination)));
 	PRECONDITION(!this->estVidePile(p_pileDestination) ||	this->reqDessusColonne(p_colonneSource).reqValeur() == AS);
 
 	this->m_piles[p_pileDestination].push(this->reqDessusColonne(p_colonneSource));
