@@ -212,7 +212,7 @@ const bool JeuSolitaire::validerMouvementTalonVersColonne(const int p_colonne) c
 {
 	PRECONDITION(p_colonne >=0);
 	PRECONDITION(p_colonne <=6);
-	if (this->m_solitaire.estVideTalon())
+	if (!this->m_solitaire.estVideTalon())
 	{
 		const Carte& dessusTalon = this->m_solitaire.reqDessusTalon();
 		if (this->m_solitaire.estVideColonne(p_colonne))
