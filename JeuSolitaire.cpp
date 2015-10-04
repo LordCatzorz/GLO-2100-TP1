@@ -225,7 +225,30 @@ const bool JeuSolitaire::validerMouvementTalonVersPile(const int p_pile) const
 {
 	PRECONDITION(p_pile >=0);
 	PRECONDITION(p_pile <=3);
-	throw "Not yet implemented";
+
+	if (!this->m_solitaire.estVideTalon())
+	{
+		const Carte& dessusTalon = this->m_solitaire.reqDessusTalon();
+		if (!this->m_solitaire.estVidePile(p_pile))
+		{
+			const Carte& dessusPile = this->m_solitaire.reqDessusPile(p_pile);
+			if (!dessusTalon.estMemeCouleur(dessusPile))
+			{
+				if (dessusPile.estSuivante(dessusTalon))
+				{
+					return true;
+				}
+			}
+		}
+		else
+		{
+			if (dessusTalon.reqSorte() == AS)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 const bool JeuSolitaire::validerMouvementColonneVersPile(const int p_colonneSource, const int p_pileDestination) const
