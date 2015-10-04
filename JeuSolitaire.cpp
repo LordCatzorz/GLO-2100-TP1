@@ -22,53 +22,58 @@ JeuSolitaire::JeuSolitaire()
 void JeuSolitaire::jouer()
 {
 	bool termine = false;
-	int i = 0;
-
-	while (!m_solitaire.verifieGagne() && !termine)
+	while (!termine)
 	{
-		std::cout << this->m_solitaire  <<"\n";
-		std::cout << this->m_menu;
-		std::string reponse;
-		std::getline (std::cin, reponse);
-		if (reponse == "1")
+		while (!m_solitaire.verifieGagne() && !termine)
 		{
-			if (!this->m_solitaire.estVideTalon())
+			std::cout << this->m_solitaire  <<"\n";
+			std::cout << this->m_menu;
+			std::string reponse;
+			std::getline (std::cin, reponse);
+			if (reponse == "1")
 			{
-				this->m_solitaire.avancerTalon();
+				if (!this->m_solitaire.estVideTalon())
+				{
+					this->m_solitaire.avancerTalon();
+				}
+				else
+				{
+					afficherMessageCoupNonValide();
+				}
+			}
+			else if (reponse == "2")
+			{
+				menuDeplacerCarteTalonVersColonne();
+			}
+			else if (reponse == "3")
+			{
+				menuDeplacerCarteTalonVersPile();
+			}
+			else if (reponse == "4")
+			{
+				menuDeplacerCarteColonneVersColonne();
+			}
+			else if (reponse == "5")
+			{
+				menuDeplacerCarteColonneVersPile();
+			}
+			else if (reponse == "6")
+			{
+				termine=true;
 			}
 			else
 			{
-				afficherMessageCoupNonValide();
+				std::cout << "Choix invalide \n\n";
 			}
 		}
-		else if (reponse == "2")
+		if (!termine)
 		{
-			menuDeplacerCarteTalonVersColonne();
-		}
-		else if (reponse == "3")
-		{
-			menuDeplacerCarteTalonVersPile();
-		}
-		else if (reponse == "4")
-		{
-			menuDeplacerCarteColonneVersColonne();
-		}
-		else if (reponse == "5")
-		{
-			menuDeplacerCarteColonneVersPile();
-		}
-		else if (reponse == "6")
-		{
-			termine=true;
-		}
-		else
-		{
-			std::cout << "Choix invalide \n\n";
+
 		}
 	}
 }
 
-void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
+const void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
 {
 	int colonneDestination = menuSelectionnerColonneDestination();
 	if (colonneDestination != -1)
@@ -84,7 +89,7 @@ void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
 	}
 }
 
-void JeuSolitaire::menuDeplacerCarteTalonVersPile()
+const void JeuSolitaire::menuDeplacerCarteTalonVersPile()
 {
 	int pileDestination = menuSelectionnerPileDestination();
 	if (pileDestination != -1)
@@ -100,7 +105,7 @@ void JeuSolitaire::menuDeplacerCarteTalonVersPile()
 	}
 }
 
-void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
+const void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 {
 	int colonneSource = menuSelectionnerColonneSource();
 	if (colonneSource != -1)
@@ -124,7 +129,7 @@ void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 	}
 }
 
-void JeuSolitaire::menuDeplacerCarteColonneVersPile()
+const void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 {
 	int colonneSource = menuSelectionnerColonneSource();
 	if (colonneSource != -1)
@@ -144,22 +149,22 @@ void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 	}
 }
 
-int JeuSolitaire::menuSelectionnerColonneSource()
+const int JeuSolitaire::menuSelectionnerColonneSource() const
 {
 	return this->afficherSousMenuAvecSelection("Entrer le numero de la colonne d'origine", 0, 6, 1);
 }
 
-int JeuSolitaire::menuSelectionnerColonneDestination()
+const int JeuSolitaire::menuSelectionnerColonneDestination() const
 {
 	return this->afficherSousMenuAvecSelection("Entrer le numero de la colonne destination", 0, 6, 1);
 }
 
-int JeuSolitaire::menuSelectionnerPileDestination()
+const int JeuSolitaire::menuSelectionnerPileDestination() const
 {
 	return this->afficherSousMenuAvecSelection("Entrer le numero de la pile destination", 0, 3, 1);
 }
 
-int JeuSolitaire::menuSelectionnerNombreCartes()
+const int JeuSolitaire::menuSelectionnerNombreCartes() const
 {
 	return this->afficherSousMenuAvecSelection("Entrer le numero le nombre de carte a déplacer", 1, 13, 2);
 }
@@ -172,7 +177,7 @@ Le caractère doit être entier et situé entre les deux paramètres "debutPorte
 La fonction retourne true si le caractère entrée et valide, sinon false.
 
 */
-bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string p_caractereEntree, int& p_valeurEntiereEntree, const int p_debutPortee , const int p_finPortee, const int p_maxNombreCaractere)
+const bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string p_caractereEntree, int& p_valeurEntiereEntree, const int p_debutPortee , const int p_finPortee, const int p_maxNombreCaractere) const
 {
 
 	p_valeurEntiereEntree = -1;
@@ -201,7 +206,7 @@ bool JeuSolitaire::convertirStringEnIntAvecValidation(const std::string p_caract
 
 }
 
-int JeuSolitaire::afficherSousMenuAvecSelection(const std::string p_message, const int p_debutPorteeValeur, const int p_finPorteeValeur, int p_maxNombreCaractere)
+const int JeuSolitaire::afficherSousMenuAvecSelection(const std::string p_message, const int p_debutPorteeValeur, const int p_finPorteeValeur, int p_maxNombreCaractere) const
 {
 	std::string valeurEntree;
 	int valeurEntiereEntree;
@@ -345,7 +350,20 @@ const bool JeuSolitaire::validerMouvementColonneVersColonne(const int p_colonneS
 	return false;
 }
 
-void JeuSolitaire::afficherMessageCoupNonValide()
+const void JeuSolitaire::afficherMessageCoupNonValide() const
 {
 	std::cout << "\n!!! COUP NON VALIDE !!!\n";
+}
+
+
+const bool JeuSolitaire::afficherMessageSucces() const
+{
+	std::cout << "Vous avez gagné! Choisissez 'q' pour quitter ou entrer pour continuer.";
+	std::string valeurEntree;
+	std::getline(std::cin, valeurEntree);
+	if (valeurEntree.compare("q") || valeurEntree.compare("Q"))
+	{
+		return true;
+	}
+	return false;
 }
