@@ -248,7 +248,7 @@ const bool JeuSolitaire::validerMouvementTalonVersPile(const int p_pile) const
 		if (!this->m_solitaire.estVidePile(p_pile))
 		{
 			const Carte& dessusPile = this->m_solitaire.reqDessusPile(p_pile);
-			if (!dessusTalon.reqSorte() == dessusPile.reqSorte())
+			if (dessusTalon.reqSorte() == dessusPile.reqSorte())
 			{
 				if (dessusPile.estSuivante(dessusTalon))
 				{
@@ -281,7 +281,7 @@ const bool JeuSolitaire::validerMouvementColonneVersPile(const int p_colonneSour
 		if (!this->m_solitaire.estVidePile(p_pileDestination))
 		{
 			const Carte& dessusPile = this->m_solitaire.reqDessusPile(p_pileDestination);
-			if (!dessusColonne.reqSorte() == dessusPile.reqSorte())
+			if (dessusColonne.reqSorte() == dessusPile.reqSorte())
 			{
 				if (dessusPile.estSuivante(dessusColonne))
 				{
