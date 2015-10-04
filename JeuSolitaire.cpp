@@ -309,7 +309,7 @@ const bool JeuSolitaire::validerMouvementColonneVersColonne(const int p_colonneS
 	PRECONDITION(p_nombreCarte > 0);
 	PRECONDITION(p_nombreCarte <=13);
 
-	if (!this->m_solitaire.reqNombreCartesVisibles(p_colonneSource) <= p_nombreCarte)
+	if (p_nombreCarte <= this->m_solitaire.reqNombreCartesVisibles(p_colonneSource))
 	{
 		if (!this->m_solitaire.estVideColonne(p_colonneSource))
 		{
