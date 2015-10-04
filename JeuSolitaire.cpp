@@ -215,7 +215,7 @@ const bool JeuSolitaire::validerMouvementTalonVersColonne(const int p_colonne) c
 	if (!this->m_solitaire.estVideTalon())
 	{
 		const Carte& dessusTalon = this->m_solitaire.reqDessusTalon();
-		if (this->m_solitaire.estVideColonne(p_colonne))
+		if (!this->m_solitaire.estVideColonne(p_colonne))
 		{
 			const Carte& dessusColonne = this->m_solitaire.reqDessusColonne(p_colonne);
 			if (!dessusTalon.estMemeCouleur(dessusColonne))
