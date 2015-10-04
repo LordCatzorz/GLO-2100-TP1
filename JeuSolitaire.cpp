@@ -66,7 +66,10 @@ void JeuSolitaire::menuDeplacerCarteTalonVersColonne()
 	int colonneDestination = menuSelectionnerColonneDestination();
 	if (colonneDestination != -1)
 	{
-		this->m_solitaire.deplacerTalonAColonne(colonneDestination);
+		if (validerMouvementTalonVersColonne(colonneDestination))
+		{
+			this->m_solitaire.deplacerTalonAColonne(colonneDestination);
+		}
 	}
 }
 
@@ -75,7 +78,10 @@ void JeuSolitaire::menuDeplacerCarteTalonVersPile()
 	int pileDestination = menuSelectionnerPileDestination();
 	if (pileDestination != -1)
 	{
-		this->m_solitaire.deplacerTalonAPile(pileDestination);
+		if (validerMouvementTalonVersPile(pileDestination))
+		{
+			this->m_solitaire.deplacerTalonAPile(pileDestination);
+		}
 	}
 }
 
@@ -90,7 +96,10 @@ void JeuSolitaire::menuDeplacerCarteColonneVersColonne()
 			int nombreCartes = menuSelectionnerNombreCartes();
 			if (nombreCartes != -1)
 			{
-				this->m_solitaire.deplacerColonneAColonne(colonneSource, colonneDestination, nombreCartes);
+				if (validerMouvementColonneVersColonne(colonneSource, colonneDestination, nombreCartes))
+				{
+					this->m_solitaire.deplacerColonneAColonne(colonneSource, colonneDestination, nombreCartes);
+				}
 			}
 		}
 	}
@@ -104,7 +113,10 @@ void JeuSolitaire::menuDeplacerCarteColonneVersPile()
 		int pileDestination = menuSelectionnerPileDestination();
 		if (pileDestination != -1)
 		{
-			this->m_solitaire.deplacerColonneAPile(colonneSource, pileDestination);
+			if (validerMouvementColonneVersPile(colonneSource, pileDestination))
+			{
+				this->m_solitaire.deplacerColonneAPile(colonneSource, pileDestination);
+			}
 		}
 	}
 }
@@ -178,3 +190,62 @@ int JeuSolitaire::afficherSousMenuAvecSelection(const std::string p_message, con
 	}
 	return valeurEntiereEntree;
 }
+
+
+const bool JeuSolitaire::validerMouvementTalonVersColonne(const int p_colonne) const
+{
+	PRECONDITION(p_colonne >=0);
+	PRECONDITION(p_colonne <=6);
+	if (this->m_solitaire.estVideTalon())
+	{
+		const Carte& dessusTalon = this->m_solitaire.reqDessusTalon();
+		if (this->m_solitaire.estVideColonne(p_colonne))
+		{
+			const Carte& dessusColonne = this->m_solitaire.reqDessusColonne(p_colonne);
+			if (!dessusTalon.estMemeCouleur(dessusColonne))
+			{
+				if (dessusColonne.estSuivante(dessusTalon))
+				{
+					return true;
+				}
+			}
+		}
+		else
+		{
+			if (dessusTalon.reqValeur() == ROI)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+const bool JeuSolitaire::validerMouvementTalonVersPile(const int p_pile) const
+{
+	PRECONDITION(p_pile >=0);
+	PRECONDITION(p_pile <=3);
+	throw "Not yet implemented";
+}
+
+const bool JeuSolitaire::validerMouvementColonneVersPile(const int p_colonneSource, const int p_pileDestination) const
+{
+	PRECONDITION(p_colonneSource >=0);
+	PRECONDITION(p_colonneSource <=6);
+
+	PRECONDITION(p_pileDestination >=0);
+	PRECONDITION(p_pileDestination <=3);
+	throw "Not yet implemented";
+}
+
+const bool JeuSolitaire::validerMouvementColonneVersColonne(const int p_colonneSource, const int p_colonneDestination, const int p_nombreCarte) const
+{
+	PRECONDITION(p_colonneSource >=0);
+	PRECONDITION(p_colonneSource <=6);
+	PRECONDITION(p_colonneDestination >=0);
+	PRECONDITION(p_colonneDestination <=6);
+	PRECONDITION(p_nombreCarte > 0);
+	PRECONDITION(p_nombreCarte <=13);
+	throw "Not yet implemented";
+}
+

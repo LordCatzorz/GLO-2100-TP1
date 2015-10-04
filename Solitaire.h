@@ -41,6 +41,19 @@ public:
 	const std::deque<Carte>& reqTalon() const;
 	const ColonneCartes& reqColonne(const int p_numeroColonne) const;
 	const std::stack<Carte>& reqPile(const int p_numeroPile) const;
+
+	
+
+	const bool estVideColonne(const int p_numeroColonne) const;
+	const bool estVideTalon() const;
+	const bool estVidePile(const int p_numeroPile) const;
+
+	
+	const Carte& reqDessusPile(const int p_numeroPile) const;
+	const Carte& reqDessusTalon() const;
+	const Carte& reqDessusColonne(const int p_numeroColonne) const;
+	const Carte& reqCartePositionColonne(const int p_numeroColonne, const int p_positionCarte) const;
+
 private:
 	std::deque<Carte> m_talon;
 	ColonneCartes m_colonnes[7];
@@ -48,10 +61,6 @@ private:
 
 	void initialiserTalon();
 	void initialiserColonnes();
-	Carte& reqDessusPile(const int p_numeroPile);
-	Carte& reqDessusTalon();
-	Carte& reqDessusColonne(const int p_numeroColonne);
-	Carte& reqCartePositionColonne(const int p_numeroColonne, const int p_positionCarte);
 };
 
 

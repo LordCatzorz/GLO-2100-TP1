@@ -28,9 +28,15 @@ private:
 	int menuSelectionnerPileDestination();
 	int menuSelectionnerNombreCartes();
 
-	int afficherSousMenuAvecSelection(const std::string message, const int debutPorteeValeur, const int finPorteeValeur, int maxNombreCaractere);
+	int afficherSousMenuAvecSelection(const std::string p_message, const int p_debutPorteeValeur, const int p_finPorteeValeur, int p_maxNombreCaractere);
 
-	bool convertirStringEnIntAvecValidation(std::string stringEntree, int& valeurEntiereEntree, const int debutPortee , const int finPortee, const int maxNombreCaractere);
+	bool convertirStringEnIntAvecValidation(std::string p_stringEntree, int& p_valeurEntiereEntree, const int p_debutPortee , const int p_finPortee, const int p_maxNombreCaractere);
+	
+	const bool validerMouvementTalonVersColonne(const int p_colonne) const;
+	const bool validerMouvementTalonVersPile(const int p_pile) const;
+	const bool validerMouvementColonneVersPile(const int p_colonneSource, const int p_pileDestination) const;
+	const bool validerMouvementColonneVersColonne(const int p_colonneSource, const int p_colonneDestination, const int p_nombreCarte) const;
+
 };
 
 

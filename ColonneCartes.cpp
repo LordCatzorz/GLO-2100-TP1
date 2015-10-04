@@ -22,7 +22,10 @@ void ColonneCartes::initColonneCartes (std::vector<Carte>& p_listeCartes)
 
 void ColonneCartes::ajoute (const Carte&  p_carte)
 {
-	PRECONDITION(this->peutAjouterCarte(p_carte));
+	PRECONDITION(this->estVide() || !this->reqCarteDessus().estMemeCouleur(p_carte));
+	PRECONDITION(this->estVide() || this->reqCarteDessus().estSuivante(p_carte));
+	PRECONDITION(!this->estVide() || p_carte.reqValeur() == ROI);
+
 	this->m_lesCartes.push_back (p_carte);
 	this->changerNombreCarteVisible(1);
 }
@@ -32,7 +35,9 @@ void ColonneCartes::deplacePaquet (ColonneCartes& p_destination, int p_nombreCar
 	PRECONDITION(p_nombreCartes > 0);
 	PRECONDITION(p_nombreCartes <= this->reqNbCartesVisibles());
 	std::vector<Carte>::iterator derniereCarteADeplacer = this->m_lesCartes.end() - p_nombreCartes;
-	PRECONDITION(p_destination.peutAjouterCarte(*derniereCarteADeplacer));
+	PRECONDITION(this->estVide() || !this->reqCarteDessus().estMemeCouleur(*derniereCarteADeplacer));
+	PRECONDITION(this->estVide() || this->reqCarteDessus().estSuivante(*derniereCarteADeplacer));
+	PRECONDITION(!this->estVide() || derniereCarteADeplacer->reqValeur() == ROI);
 	for (std::vector<Carte>::iterator iter = derniereCarteADeplacer; iter != this->m_lesCartes.end();iter++)
 	{
 		p_destination.ajoute(*iter);
@@ -50,7 +55,7 @@ void ColonneCartes::supprimeDerniereCarte ()
 	this->changerNombreCarteVisible(-1);
 }
 
-int ColonneCartes::reqNbCartesVisibles () const
+const int ColonneCartes::reqNbCartesVisibles () const
 {
 	return this->m_nbCartesVisibles;
 }
@@ -84,33 +89,33 @@ std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCa
 }
 
 
-bool ColonneCartes::peutAjouterCarte(const Carte& p_carte) const
-{
-
-	if (this->m_lesCartes.empty())
-	{
-		if(p_carte.reqSorte() == ROI)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	else
-	{
-		Carte derniereCarte = this->m_lesCartes.back();
-		if (!derniereCarte.estMemeCouleur(p_carte))
-		{
-			if (derniereCarte.estSuivante(p_carte))
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
+//const bool ColonneCartes::peutAjouterCarte(const Carte& p_carte) const
+//{
+//
+//	if (this->m_lesCartes.empty())
+//	{
+//		if(p_carte.reqSorte() == ROI)
+//		{
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
+//	else
+//	{
+//		Carte derniereCarte = this->m_lesCartes.back();
+//		if (!derniereCarte.estMemeCouleur(p_carte))
+//		{
+//			if (derniereCarte.estSuivante(p_carte))
+//			{
+//				return true;
+//			}
+//		}
+//	}
+//	return false;
+//}
 
 void ColonneCartes::changerNombreCarteVisible(const int p_differenceNbCarte)
 {
@@ -127,16 +132,35 @@ const std::vector<Carte>& ColonneCartes::reqLesCartes() const
 }
 
 
-Carte& ColonneCartes::reqCarteDessus ()
+Carte& ColonneCartes::reqCarteDessus()
 {
-	PRECONDITION(this->m_lesCartes.size() > 0);
+	PRECONDITION(!this->estVide());
+	return this->m_lesCartes.back();
+}
+
+Carte& ColonneCartes::reqCartePosition(const int p_position)
+{
+	PRECONDITION(!this->estVide());
+	PRECONDITION(p_position <= this->reqNbCartesVisibles());
+	return *(this->m_lesCartes.end() - p_position);
+}
+
+const Carte& ColonneCartes::reqCarteDessus() const
+{
+	PRECONDITION(!this->estVide());
 	return this->m_lesCartes.back();
 }
 
 
-Carte& ColonneCartes::reqCartePosition(const int p_position)
+const Carte& ColonneCartes::reqCartePosition(const int p_position) const
 {
-	PRECONDITION(this->m_lesCartes.size() > 0);
+	PRECONDITION(!this->estVide());
 	PRECONDITION(p_position <= this->reqNbCartesVisibles());
 	return *(this->m_lesCartes.end() - p_position);
+}
+
+
+const bool ColonneCartes::estVide() const
+{
+	return this->m_lesCartes.size() == 0;
 }

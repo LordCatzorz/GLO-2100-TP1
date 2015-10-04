@@ -66,7 +66,6 @@ void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pil
 	PRECONDITION(p_pileDestination <= 3);
 	PRECONDITION(p_colonneSource >= 0);
 	PRECONDITION(p_colonneSource <= 6);
-
 	PRECONDITION(this->m_colonnes[p_colonneSource].reqLesCartes().size() > 0);
 	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 || !this->reqDessusColonne(p_colonneSource).estMemeCouleur(this->reqDessusPile(p_pileDestination)));
 	PRECONDITION(this->m_piles[p_pileDestination].size() == 0 || this->reqDessusPile(p_pileDestination).estSuivante(this->reqDessusColonne(p_colonneSource)));
@@ -173,7 +172,7 @@ const std::stack<Carte>& Solitaire::reqPile(const int p_numeroPile) const
 	return this->m_piles[p_numeroPile];
 }
 
-Carte& Solitaire::reqDessusPile(int p_numeroPile)
+const Carte& Solitaire::reqDessusPile(int p_numeroPile) const
 {
 	PRECONDITION(p_numeroPile >= 0);
 	PRECONDITION(p_numeroPile <= 3);
@@ -181,23 +180,43 @@ Carte& Solitaire::reqDessusPile(int p_numeroPile)
 	return this->m_piles[p_numeroPile].top();
 }
 
-Carte& Solitaire::reqDessusTalon()
+const Carte& Solitaire::reqDessusTalon() const
 {
 	return this->m_talon.front();
 }
 
 
-Carte& Solitaire::reqDessusColonne(const int p_numeroColonne)
+const Carte& Solitaire::reqDessusColonne(const int p_numeroColonne) const
 {
 	PRECONDITION(p_numeroColonne >= 0);
 	PRECONDITION(p_numeroColonne <= 6);
 	return this->m_colonnes[p_numeroColonne].reqCarteDessus();
 }
 
-Carte& Solitaire::reqCartePositionColonne(const int p_numeroColonne, const int p_position)
+const Carte& Solitaire::reqCartePositionColonne(const int p_numeroColonne, const int p_position) const
 {
 	PRECONDITION(p_numeroColonne >= 0);
 	PRECONDITION(p_numeroColonne <= 6);
 	PRECONDITION(p_position <= this->m_colonnes[p_numeroColonne].reqNbCartesVisibles());
 	return this->m_colonnes[p_numeroColonne].reqCartePosition(p_position);
+}
+
+
+const bool Solitaire::estVideColonne(const int p_numeroColonne) const
+{
+	PRECONDITION(p_numeroColonne >= 0);
+	PRECONDITION(p_numeroColonne <= 6);
+	return this->reqColonne(p_numeroColonne).reqLesCartes().size() == 0;
+}
+
+const bool Solitaire::estVideTalon() const
+{
+	return this->reqTalon().size() == 0;
+}
+
+const bool Solitaire::estVidePile(const int p_numeroPile) const
+{
+	PRECONDITION(p_numeroPile >= 0);
+	PRECONDITION(p_numeroPile <= 3);
+	return this->reqPile(p_numeroPile).size() == 0;
 }
