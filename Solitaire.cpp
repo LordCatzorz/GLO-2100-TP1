@@ -25,7 +25,7 @@ void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_c
 	PRECONDITION(p_colonneDestination >= 0);
 	PRECONDITION(p_nbCartes > 0);
 	PRECONDITION(p_colonneSource <= 6);
-	PRECONDITION(p_colonneSource <= 6);
+	PRECONDITION(p_colonneDestination <= 6);
 	PRECONDITION(this->m_colonnes[p_colonneSource].reqNbCartesVisibles() >= p_nbCartes);
 	PRECONDITION(this->reqColonne(p_colonneDestination).estVide() || !this->reqDessusColonne(p_colonneDestination).estMemeCouleur(this->reqCartePositionColonne(p_colonneSource, p_nbCartes)));
 	PRECONDITION(this->reqColonne(p_colonneDestination).estVide() || this->reqDessusColonne(p_colonneDestination).estSuivante(this->reqCartePositionColonne(p_colonneSource, p_nbCartes)));
