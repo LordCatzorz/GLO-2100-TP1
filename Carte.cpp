@@ -10,7 +10,9 @@
 #include <sstream>
 #include <cstdlib>
 using namespace std;
-
+/**
+* 
+*/
 Carte::Carte (Valeur p_valeur, Sorte p_sorte)
 {
 	this->m_valeur = p_valeur;
@@ -27,10 +29,10 @@ const bool Carte::estMemeCouleur(const Carte& p_carte) const
 	return this->estCouleurNoir() == p_carte.estCouleurNoir();
 }
 
-ostream& operator<< (ostream& sortie, const Carte& p_carte)
+ostream& operator<< (ostream& p_sortie, const Carte& p_carte)
 {
-	sortie << p_carte.reqValeurString() << "'" << p_carte.reqSorteString();
-	return sortie;
+	p_sortie << p_carte.reqValeurString() << "'" << p_carte.reqSorteString();
+	return p_sortie;
 }
 
 std::string Carte::reqSorteString() const

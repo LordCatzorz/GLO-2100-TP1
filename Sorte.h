@@ -8,13 +8,7 @@
 #ifndef SORTE_H_
 #define SORTE_H_
 
-enum Sorte
-{
-	COEUR=1,
-	CARREAU=2,
-	PIQUE=3,
-	TREFLE=4
-};
+
 
 
 
