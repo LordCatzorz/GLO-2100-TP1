@@ -17,7 +17,6 @@ const void afficherMessageCoupNonValide()
 	std::cout << "\n!!! COUP NON VALIDE !!!\n";
 }
 
-
 const bool afficherMessageSucces()
 {
 	std::cout << "\n\nVous avez gagné!\n\nChoisissez 'q' pour quitter ou entrer pour continuer : ";
