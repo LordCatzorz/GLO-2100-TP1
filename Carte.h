@@ -1,9 +1,9 @@
 /*
- * Carte.h
- *
- *  Created on: 2015-09-24
- *      Author: Raphaël Sylvain (111 124 564)
- */
+* Carte.h
+*
+*  Created on: 2015-09-24
+*      Author: Raphaël Sylvain (111 124 564)
+*/
 
 #ifndef CARTE_H_
 #define CARTE_H_

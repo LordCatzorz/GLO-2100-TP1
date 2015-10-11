@@ -121,10 +121,10 @@ std::string Solitaire::reqEtatJeu () const
 	return etatJeu.str();
 }
 
-std::ostream& operator<< (std::ostream& sortie, const Solitaire& p_solitaire)
+std::ostream& operator<< (std::ostream& p_sortie, const Solitaire& p_solitaire)
 {
-	sortie << p_solitaire.reqEtatJeu();
-	return sortie;
+	p_sortie << p_solitaire.reqEtatJeu();
+	return p_sortie;
 }
 
 void Solitaire::initialiserTalon()

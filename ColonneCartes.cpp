@@ -59,11 +59,11 @@ const int ColonneCartes::reqNbCartesVisibles () const
 	return this->m_nbCartesVisibles;
 }
 
-std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCartes)
+std::ostream& operator<< (std::ostream& p_sortie, const ColonneCartes& p_colonneCartes)
 {
 	if (p_colonneCartes.m_lesCartes.size() == 0)
 	{
-		sortie << "X ";
+		p_sortie << "X ";
 	}
 	else
 	{
@@ -75,44 +75,15 @@ std::ostream& operator<< (std::ostream& sortie, const ColonneCartes& p_colonneCa
 
 		for (int i = 0; i < nbCarteCache; ++i)
 		{
-			sortie << "? ";
+			p_sortie << "? ";
 		}
 		for (std::vector<Carte>::const_iterator iter =  p_colonneCartes.m_lesCartes.begin() + nbCarteCache; iter != p_colonneCartes.m_lesCartes.end(); ++iter)
 		{
-			sortie << *iter << " ";
+			p_sortie << *iter << " ";
 		}
 	}
-	return sortie;
+	return p_sortie;
 }
-
-
-//const bool ColonneCartes::peutAjouterCarte(const Carte& p_carte) const
-//{
-//
-//	if (this->m_lesCartes.empty())
-//	{
-//		if(p_carte.reqSorte() == ROI)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
-//	else
-//	{
-//		Carte derniereCarte = this->m_lesCartes.back();
-//		if (!derniereCarte.estMemeCouleur(p_carte))
-//		{
-//			if (derniereCarte.estSuivante(p_carte))
-//			{
-//				return true;
-//			}
-//		}
-//	}
-//	return false;
-//}
 
 void ColonneCartes::changerNombreCarteVisible(const int p_differenceNbCarte)
 {

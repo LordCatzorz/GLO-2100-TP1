@@ -36,7 +36,7 @@ public:
 
 	std::string reqEtatJeu () const;
 
-	friend std::ostream& operator<< (std::ostream& sortie, const Solitaire& p_solitaire);
+	friend std::ostream& operator<< (std::ostream& p_sortie, const Solitaire& p_solitaire);
 	
 	const std::deque<Carte>& reqTalon() const;
 	const ColonneCartes& reqColonne(const int p_numeroColonne) const;
