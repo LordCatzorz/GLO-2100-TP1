@@ -2,7 +2,7 @@
  * Carte.h
  *
  *  Created on: 2015-09-24
- *      Author: etudiant
+ *      Author: Raphaël Sylvain (111 124 564)
  */
 
 #ifndef CARTE_H_
@@ -12,7 +12,9 @@
 
 #include "ContratException.h"
 
-
+/**
+* Énumeration qui correspond aux quatre sorte de carte
+*/
 enum Sorte
 {
 	COEUR=1,
@@ -21,6 +23,10 @@ enum Sorte
 	TREFLE=4
 };
 
+
+/**
+* Énumeration qui correspond au 13 valeurs de carte.
+*/
 enum Valeur
 {
 	AS=1,
@@ -52,7 +58,7 @@ public:
 	/**
 	* @brief Cette éthode vérifie si la Carte actuelle a une valeur considéré comme la suivante de la Carte en paramètre.
 	* @param p_carte Une référence constante vers une carte.
-	* @return Vrai si la carte actuelle est la suivainte, sinon faux.
+	* @return Vrai si la carte actuelle est la suivante, sinon faux.
 	*/
 	const bool estSuivante(const Carte& p_carte) const;
 
@@ -71,18 +77,37 @@ public:
 	friend std::ostream& operator<< (std::ostream& p_sortie, const Carte& p_carte);
 
 	/**
-	*
+	* @brief Cette méthode vérifie si la couleur de la Carte est noire.
+	* @return Vrai si la couleur est noire, sinon faux.
 	*/
 	const bool estCouleurNoir() const;
 
+	/**
+	* @brief Cette méthode retourne la Valeur de la Carte.
+	* @return La Valeur de la Carte en constante
+	*/
 	const Valeur reqValeur() const;
+
+	/**
+	* @brief Cette méthode retourne la Sorte de la Carte.
+	* @return La Sorte de la Carte en constante
+	*/
 	const Sorte reqSorte() const;
 
 private:
 	Sorte m_sorte;
 	Valeur m_valeur;
 
+	/**
+	* @brief Cette méthode retourne la Valeur de la Carte.
+	* @return La Valeur de la Carte
+	*/
 	std::string reqSorteString() const;
+
+	/**
+	* @brief Cette méthode retourne la Sorte de la Carte.
+	* @return La Sorte de la Carte
+	*/
 	std::string reqValeurString() const;
 };
 

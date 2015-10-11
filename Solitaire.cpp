@@ -2,7 +2,7 @@
 * Solitaire.cpp
 *
 *  Created on: 2015-09-24
-*      Author: etudiant
+*      Author: Raphaël Sylvain (111 124 564)
 */
 
 #include "Solitaire.h"

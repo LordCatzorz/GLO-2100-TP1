@@ -2,7 +2,7 @@
 * jeuSolitaire.cpp
 *
 *  Created on: 2015-09-27
-*      Author: etudiant
+*      Author: Raphaël Sylvain (111 124 564)
 */
 
 #include "Solitaire.h"
@@ -37,10 +37,10 @@ Le caractère doit être entier et situé entre les deux paramètres "debutPorte
 La fonction retourne true si le caractère entrée et valide, sinon false.
 
 */
-const bool convertirStringEnIntAvecValidation(const std::string p_caractereEntree, int& p_valeurEntiereEntree, const int p_debutPortee , const int p_finPortee, const int p_maxNombreCaractere)
+const bool convertirStringEnIntAvecValidation(const std::string p_caractereEntree, int& p_valeurEntiereSortie, const int p_debutPortee , const int p_finPortee, const int p_maxNombreCaractere)
 {
 
-	p_valeurEntiereEntree = -1;
+	p_valeurEntiereSortie = -1;
 	if (p_caractereEntree.length() == 0 || p_caractereEntree.length() > p_maxNombreCaractere)
 	{
 		return false;
@@ -53,8 +53,8 @@ const bool convertirStringEnIntAvecValidation(const std::string p_caractereEntre
 	}
 	else
 	{
-		std::stringstream(p_caractereEntree) >> p_valeurEntiereEntree;
-		if (p_debutPortee <= p_valeurEntiereEntree && p_valeurEntiereEntree <= p_finPortee )
+		std::stringstream(p_caractereEntree) >> p_valeurEntiereSortie;
+		if (p_debutPortee <= p_valeurEntiereSortie && p_valeurEntiereSortie <= p_finPortee )
 		{
 			return true;
 		}
