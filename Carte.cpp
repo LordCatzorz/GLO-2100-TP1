@@ -9,7 +9,6 @@
 #include "Carte.h"
 #include <sstream>
 #include <cstdlib>
-using namespace std;
 
 Carte::Carte (Valeur p_valeur, Sorte p_sorte)
 {
@@ -39,7 +38,7 @@ const bool Carte::estMemeCouleur(const Carte& p_carte) const
 * Retourne une string formatée pour une carte. Le format est le suivant:
 *	[VALEUR]'[SORTE]
 */
-ostream& operator<< (ostream& p_sortie, const Carte& p_carte)
+std::ostream& operator<< (std::ostream& p_sortie, const Carte& p_carte)
 {
 	p_sortie << p_carte.reqValeurString() << "'" << p_carte.reqSorteString();
 	return p_sortie;
@@ -47,7 +46,7 @@ ostream& operator<< (ostream& p_sortie, const Carte& p_carte)
 
 std::string Carte::reqSorteString() const
 {
-	string sortie;
+	std::string sortie;
 
 	switch (this->reqSorte())
 	{

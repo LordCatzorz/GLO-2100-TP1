@@ -159,7 +159,7 @@ std::string Solitaire::reqEtatJeu () const
 
 	//Pile
 	etatJeu << "             Piles ";
-	for (int i = 0; i < 4; ++i)
+	for (unsigned int i = 0; i < 4; ++i)
 	{
 		if (this->m_piles[i].size() == 0)
 		{
@@ -173,7 +173,7 @@ std::string Solitaire::reqEtatJeu () const
 	etatJeu << std::endl << std::endl;
 
 	//Colonnes
-	for (int i = 0 ; i < 7; ++i)
+	for (unsigned int i = 0 ; i < 7; ++i)
 	{
 		etatJeu << "Col." << i << ": " << this->m_colonnes[i] << std::endl;
 	}
@@ -196,9 +196,9 @@ std::ostream& operator<< (std::ostream& p_sortie, const Solitaire& p_solitaire)
 void Solitaire::initialiserTalon()
 {
 
-	for (int i = 1; i <= 4; i++) // Sortes
+	for (unsigned int i = 1; i < 5; i++) // Sortes
 	{
-		for (int j = 1; j <= 13; j++) // Valeurs
+		for (unsigned int j = 1; j < 14; j++) // Valeurs
 		{
 			Carte carte((Valeur) j, (Sorte) i);
 			this->m_talon.push_back(carte);
@@ -216,14 +216,14 @@ void Solitaire::initialiserTalon()
 */
 void Solitaire::initialiserColonnes()
 {
-	for (int i = 0; i < 7; ++i)
+	for (unsigned int i = 0; i < 7; ++i)
 	{
 		this->m_colonnes[i] = ColonneCartes();
 
 		const std::deque<Carte>::iterator finSousDeque = this->m_talon.begin() + i + 1;
 		std::vector<Carte> carteDeColonne = std::vector<Carte>(this->m_talon.begin(), finSousDeque);
 		this->m_colonnes[i].initColonneCartes(carteDeColonne);
-		for (int j = 0; j < i+1; j++)
+		for (unsigned int j = 0; j < i+1; j++)
 		{
 			this->m_talon.pop_front();
 		}

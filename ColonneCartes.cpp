@@ -65,7 +65,7 @@ void ColonneCartes::deplacePaquet (ColonneCartes& p_destination, int p_nombreCar
 	{
 		p_destination.ajoute(*iter);
 	}
-	for (int i = 0; i < p_nombreCartes; i++)
+	for (unsigned int i = 0; i < p_nombreCartes; i++)
 	{
 		this->supprimeDerniereCarte();
 	}
@@ -108,7 +108,7 @@ std::ostream& operator<< (std::ostream& p_sortie, const ColonneCartes& p_colonne
 			nbCarteCache = 0;
 		}
 
-		for (int i = 0; i < nbCarteCache; ++i)
+		for (unsigned int i = 0; i < nbCarteCache; ++i)
 		{
 			p_sortie << "? ";
 		}
