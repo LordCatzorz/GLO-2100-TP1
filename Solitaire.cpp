@@ -6,19 +6,33 @@
 */
 
 #include "Solitaire.h"
-
+/**
+* Il y a premièrement l'initialisation du talon qui est fait, suivi de celle des colonnes.
+*/
 Solitaire::Solitaire()
 {
 	this->initialiserTalon();
 	this->initialiserColonnes();
 }
-
+/**
+* Pour pouvoir appeler cette méthode, il faut qu'il y ait au moins une carte dans le talon.
+* Si ce n'est pas le cas, une erreur de précondition est lancée.
+* Cette méthode va prendre la carte à la première position et va la mettre à la fin, faisant avancer le reste du talon.
+*/
 void Solitaire::avancerTalon()
 {
 	PRECONDITION(this->m_talon.size() > 0);
 	std::rotate(this->m_talon.begin(), this->m_talon.end() - 1, this->m_talon.end());
 }
 
+/**
+* Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
+* Il faut que le nombre en paramètre pour le numéro de colonne soit entre 0 et 6.
+* Il faut aussi qu'il y ait au moins le nombre de carte visible sur le paquet source que le nombre de carte à déplacer.
+* Le coup désiré doit aussi être valide selon les règles du Klondike.
+* Si l'une de ces conditions n'est pas respectée, une erreur de précondition est lancée.
+* @see ColonneCartes.deplacePaquet()
+*/
 void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_colonneDestination, const int p_nbCartes)
 {
 	PRECONDITION(p_colonneSource >= 0);
@@ -34,6 +48,15 @@ void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_c
 	this->m_colonnes[p_colonneSource].deplacePaquet(this->m_colonnes[p_colonneDestination], p_nbCartes);
 }
 
+/**
+* Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
+* Il faut que le nombre en paramètre pour le numéro de colonne soit entre 0 et 6.
+* Il faut qu'il y ait au moins une carte dans le talon.
+* Le coup désiré doit aussi être valide selon les règles du Klondike.
+* Si l'une de ces conditions n'est pas respectée, une erreur de précondition est lancée.
+* La carte du talon est ajoutée sur la colonne avant d'être retirée du talon.
+* @see ColonneCartes.ajoute()
+*/
 void Solitaire::deplacerTalonAColonne (const int p_colonneDestination)
 {
 	PRECONDITION(p_colonneDestination >= 0);
@@ -47,6 +70,15 @@ void Solitaire::deplacerTalonAColonne (const int p_colonneDestination)
 	this->m_talon.pop_front();
 }
 
+/**
+* Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
+* Il faut que le nombre en paramètre pour le numéro de pile soit entre 0 et 3u.
+* Il faut qu'il y ait au moins une carte dans le talon.
+* Le coup désiré doit aussi être valide selon les règles du Klondike.
+* Si l'une de ces conditions n'est pas respectée, une erreur de précondition est lancée.
+* La carte du talon est ajoutée sur la colonne avant d'être retirée du talon.
+* @see ColonneCartes.ajoute()
+*/
 void Solitaire::deplacerTalonAPile (const int p_pileDestination)
 {
 	PRECONDITION(p_pileDestination >= 0);
@@ -60,6 +92,16 @@ void Solitaire::deplacerTalonAPile (const int p_pileDestination)
 	this->m_talon.pop_front();
 }
 
+
+/**
+* Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
+* Il faut que le nombre en paramètre pour le numéro de colonne soit entre 0 et 6.
+* Il faut que le nombre en paramètre pour le numéro de la pile soit entre 0 et 3.
+* Le coup désiré doit aussi être valide selon les règles du Klondike.
+* Si l'une de ces conditions n'est pas respectée, une erreur de précondition est lancée.
+* La carte de la colonne est ajoutée sur la pile avant d'être retirée de la colonne.
+* @see ColonneCartes.supprimeDerniereCarte();
+*/
 void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pileDestination)
 {
 	PRECONDITION(p_pileDestination >= 0);
@@ -75,6 +117,10 @@ void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pil
 	this->m_colonnes[p_colonneSource].supprimeDerniereCarte();
 }
 
+/**
+* Cette méthode regarde si chacune des 4 piles ont 13 cartes.
+* Si l'application a respectée les règles du Klondike, si 13 cartes sont sur chaque pile, la partie est gagnée.
+*/
 bool Solitaire::verifieGagne() const
 {
 	return (this->m_piles[0].size() == 13) &&
@@ -83,6 +129,20 @@ bool Solitaire::verifieGagne() const
 		(this->m_piles[3].size() == 13);
 }
 
+
+/**
+* Le format de la string retournée est :
+*   TALON				PILE1	PILE2	PILE3	PILE4
+*	
+*	COLONNE1
+*	COLONNE2
+*	COLONNE3
+*	COLONNE4
+*	COLONNE5
+*	COLONNE6
+*	COLONNE7
+*
+*/
 std::string Solitaire::reqEtatJeu () const
 {
 	std::ostringstream etatJeu;
@@ -121,12 +181,18 @@ std::string Solitaire::reqEtatJeu () const
 	return etatJeu.str();
 }
 
+/**
+* @see Solitaire.reqEtatJeu()
+*/
 std::ostream& operator<< (std::ostream& p_sortie, const Solitaire& p_solitaire)
 {
 	p_sortie << p_solitaire.reqEtatJeu();
 	return p_sortie;
 }
 
+/**
+* Cette méthode crée un paquet de carte complet (13 cartes pour chaque 4 sortes), puis le mélange.
+*/
 void Solitaire::initialiserTalon()
 {
 
@@ -143,6 +209,11 @@ void Solitaire::initialiserTalon()
 	std::random_shuffle(this->m_talon.begin(), this->m_talon.end());
 }
 
+/**
+* Pour initialiser chacune des colonnes, cette méthode va piger les cartes dans le talon,
+* puis va mettre ces cartes au-dessus d'une colonne.
+* @see ColonneCartes.initColonneCartes
+*/
 void Solitaire::initialiserColonnes()
 {
 	for (int i = 0; i < 7; ++i)
@@ -164,6 +235,11 @@ const std::deque<Carte>& Solitaire::reqTalon() const
 {
 	return this->m_talon;
 }
+
+/**
+* Cette méthode s'attend que le numéro de colonne en paramètre soit entre 0 et 6.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+*/
 const ColonneCartes& Solitaire::reqColonne(const int p_numeroColonne) const
 {
 	PRECONDITION(p_numeroColonne >= 0);
@@ -171,6 +247,10 @@ const ColonneCartes& Solitaire::reqColonne(const int p_numeroColonne) const
 
 	return this->m_colonnes[p_numeroColonne];
 }
+/**
+* Cette méthode s'attend que le numéro de la pile en paramètre soit entre 0 et 3.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+*/
 const std::stack<Carte>& Solitaire::reqPile(const int p_numeroPile) const
 {
 	PRECONDITION(p_numeroPile >= 0);
@@ -179,6 +259,10 @@ const std::stack<Carte>& Solitaire::reqPile(const int p_numeroPile) const
 	return this->m_piles[p_numeroPile];
 }
 
+/**
+* Cette méthode s'attend que le numéro de la pile en paramètre soit entre 0 et 3.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+*/
 const Carte& Solitaire::reqDessusPile(int p_numeroPile) const
 {
 	PRECONDITION(p_numeroPile >= 0);
@@ -192,7 +276,11 @@ const Carte& Solitaire::reqDessusTalon() const
 	return this->m_talon.front();
 }
 
-
+/**
+* Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+* @see ColonnesCartes.reqCarteDessus()
+*/
 const Carte& Solitaire::reqDessusColonne(const int p_numeroColonne) const
 {
 	PRECONDITION(p_numeroColonne >= 0);
@@ -200,6 +288,12 @@ const Carte& Solitaire::reqDessusColonne(const int p_numeroColonne) const
 	return this->m_colonnes[p_numeroColonne].reqCarteDessus();
 }
 
+/**
+* Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
+* Elle s'attend aussi que la position demandée soit inférieure ou égale au nombre de carte visible.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+* @see ColonneCartes.reqCartePosition()
+*/
 const Carte& Solitaire::reqCartePositionColonne(const int p_numeroColonne, const int p_position) const
 {
 	PRECONDITION(p_numeroColonne >= 0);
@@ -208,12 +302,16 @@ const Carte& Solitaire::reqCartePositionColonne(const int p_numeroColonne, const
 	return this->m_colonnes[p_numeroColonne].reqCartePosition(p_position);
 }
 
-
+/**
+* Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+* @see ColonneCartes.estVide()
+*/
 const bool Solitaire::estVideColonne(const int p_numeroColonne) const
 {
 	PRECONDITION(p_numeroColonne >= 0);
 	PRECONDITION(p_numeroColonne <= 6);
-	return this->reqColonne(p_numeroColonne).reqLesCartes().size() == 0;
+	return this->reqColonne(p_numeroColonne).estVide();
 }
 
 const bool Solitaire::estVideTalon() const
@@ -221,6 +319,10 @@ const bool Solitaire::estVideTalon() const
 	return this->reqTalon().size() == 0;
 }
 
+/**
+* Cette méthode s'attend que le numéro de la pile en paramètre soit entre 0 et 3.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+*/
 const bool Solitaire::estVidePile(const int p_numeroPile) const
 {
 	PRECONDITION(p_numeroPile >= 0);
@@ -228,7 +330,11 @@ const bool Solitaire::estVidePile(const int p_numeroPile) const
 	return this->reqPile(p_numeroPile).size() == 0;
 }
 
-
+/**
+* Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
+* Si ce n'est pas le cas une erreur de précondition est lancée.
+* @see ColonneCartes.reqNbCartesVisibles()
+*/
 const int Solitaire::reqNombreCartesVisibles(const int p_numeroColonne) const
 {
 	PRECONDITION(p_numeroColonne >= 0);

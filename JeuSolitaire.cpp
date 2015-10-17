@@ -22,11 +22,13 @@ const bool afficherMessageSucces()
 	std::cout << "\n\nVous avez gagné!\n\nChoisissez 'q' pour quitter ou entrer pour continuer : ";
 	std::string valeurEntree;
 	std::getline(std::cin, valeurEntree);
+
+	bool veutQuitter = false;
 	if (valeurEntree.compare("q") || valeurEntree.compare("Q"))
 	{
-		return true;
+		veutQuitter = true;
 	}
-	return false;
+	return veutQuitter;
 }
 
 /***
@@ -41,28 +43,30 @@ const bool convertirStringEnIntAvecValidation(const std::string p_caractereEntre
 {
 
 	p_valeurEntiereSortie = -1;
+	bool estCaractereValide = false;
 	if (p_caractereEntree.length() == 0 || p_caractereEntree.length() > p_maxNombreCaractere)
 	{
-		return false;
+		estCaractereValide =  false;
 	}
 	// Bon... mon == arrête de fonctionner pour les strings rendu ici dans le code... Je trouve un bypass... 
 	// Preuve: http://i.imgur.com/WX3eGA3.png
 	else if (p_caractereEntree.compare("q") == 0 || p_caractereEntree.compare("Q") == 0)
 	{
-		return true;
+		estCaractereValide = true;
 	}
 	else
 	{
 		std::stringstream(p_caractereEntree) >> p_valeurEntiereSortie;
 		if (p_debutPortee <= p_valeurEntiereSortie && p_valeurEntiereSortie <= p_finPortee )
 		{
-			return true;
+			estCaractereValide = true;
 		}
 		else
 		{
-			return false;
+			estCaractereValide =  false;
 		}
 	}
+	return estCaractereValide;
 
 }
 
@@ -83,6 +87,7 @@ const bool validerMouvementTalonVersColonne(const int p_colonne)
 {
 	PRECONDITION(p_colonne >=0);
 	PRECONDITION(p_colonne <=6);
+	bool estMouvementValide;
 	if (!m_solitaire.estVideTalon())
 	{
 		const Carte& dessusTalon = m_solitaire.reqDessusTalon();
@@ -93,7 +98,7 @@ const bool validerMouvementTalonVersColonne(const int p_colonne)
 			{
 				if (dessusColonne.estSuivante(dessusTalon))
 				{
-					return true;
+					estMouvementValide = true;
 				}
 			}
 		}
@@ -101,18 +106,18 @@ const bool validerMouvementTalonVersColonne(const int p_colonne)
 		{
 			if (dessusTalon.reqValeur() == ROI)
 			{
-				return true;
+				estMouvementValide = true;
 			}
 		}
 	}
-	return false;
+	return estMouvementValide;
 }
 
 const bool validerMouvementTalonVersPile(const int p_pile)
 {
 	PRECONDITION(p_pile >=0);
 	PRECONDITION(p_pile <=3);
-
+	bool estMouvementValide;
 	if (!m_solitaire.estVideTalon())
 	{
 		const Carte& dessusTalon = m_solitaire.reqDessusTalon();
@@ -123,7 +128,7 @@ const bool validerMouvementTalonVersPile(const int p_pile)
 			{
 				if (dessusTalon.estSuivante(dessusPile))
 				{
-					return true;
+					estMouvementValide = true;
 				}
 			}
 		}
@@ -131,11 +136,11 @@ const bool validerMouvementTalonVersPile(const int p_pile)
 		{
 			if (dessusTalon.reqValeur() == AS)
 			{
-				return true;
+				estMouvementValide = true;
 			}
 		}
 	}
-	return false;
+	return estMouvementValide;
 }
 
 const bool validerMouvementColonneVersPile(const int p_colonneSource, const int p_pileDestination)
@@ -146,6 +151,7 @@ const bool validerMouvementColonneVersPile(const int p_colonneSource, const int 
 	PRECONDITION(p_pileDestination >=0);
 	PRECONDITION(p_pileDestination <=3);
 
+	bool estMouvementValide;
 	if (!m_solitaire.estVideColonne(p_colonneSource))
 	{
 		const Carte& dessusColonne = m_solitaire.reqDessusColonne(p_colonneSource);
@@ -156,7 +162,7 @@ const bool validerMouvementColonneVersPile(const int p_colonneSource, const int 
 			{
 				if (dessusColonne.estSuivante(dessusPile))
 				{
-					return true;
+					estMouvementValide = true;
 				}
 			}
 		}
@@ -164,11 +170,11 @@ const bool validerMouvementColonneVersPile(const int p_colonneSource, const int 
 		{
 			if (dessusColonne.reqValeur() == AS)
 			{
-				return true;
+				estMouvementValide = true;
 			}
 		}
 	}
-	return false;
+	return estMouvementValide;
 }
 
 const bool validerMouvementColonneVersColonne(const int p_colonneSource, const int p_colonneDestination, const int p_nombreCarte)
@@ -180,6 +186,7 @@ const bool validerMouvementColonneVersColonne(const int p_colonneSource, const i
 	PRECONDITION(p_nombreCarte > 0);
 	PRECONDITION(p_nombreCarte <=13);
 
+	bool estMouvementValide;
 	if (p_nombreCarte <= m_solitaire.reqNombreCartesVisibles(p_colonneSource))
 	{
 		if (!m_solitaire.estVideColonne(p_colonneSource))
@@ -193,7 +200,7 @@ const bool validerMouvementColonneVersColonne(const int p_colonneSource, const i
 				{
 					if (dessusColonneDestination.estSuivante(dessousColonneSource))
 					{
-						return true;
+						estMouvementValide = true;
 					}
 				}
 			}
@@ -201,12 +208,12 @@ const bool validerMouvementColonneVersColonne(const int p_colonneSource, const i
 			{
 				if (dessousColonneSource.reqValeur() == ROI)
 				{
-					return true;
+					estMouvementValide = true;
 				}
 			}
 		}
 	}
-	return false;
+	return estMouvementValide;
 }
 
 const int menuSelectionnerColonneSource()
