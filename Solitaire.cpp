@@ -7,6 +7,7 @@
 
 #include "Solitaire.h"
 /**
+* @brief Constructeur de Solitaire
 * Il y a premièrement l'initialisation du talon qui est fait, suivi de celle des colonnes.
 */
 Solitaire::Solitaire()
@@ -15,6 +16,7 @@ Solitaire::Solitaire()
 	this->initialiserColonnes();
 }
 /**
+* @brief Cette méthode fait avancer le talon.
 * Pour pouvoir appeler cette méthode, il faut qu'il y ait au moins une carte dans le talon.
 * Si ce n'est pas le cas, une erreur de précondition est lancée.
 * Cette méthode va prendre la carte à la première position et va la mettre à la fin, faisant avancer le reste du talon.
@@ -26,6 +28,10 @@ void Solitaire::avancerTalon()
 }
 
 /**
+* @brief Cette méthode déplace un nombre de carte d'une colonne vers une autre.
+* @param p_colonneSource Le numéro de la colonne sur laquelle prélever les Cartes.
+* @param p_colonneDestination Le numéro de la colonne sur laquelle poser les Cartes.
+* @brief p_nbCarte Le nombre de carte à déplacer.
 * Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
 * Il faut que le nombre en paramètre pour le numéro de colonne soit entre 0 et 6.
 * Il faut aussi qu'il y ait au moins le nombre de carte visible sur le paquet source que le nombre de carte à déplacer.
@@ -49,6 +55,8 @@ void Solitaire::deplacerColonneAColonne(const int p_colonneSource, const int p_c
 }
 
 /**
+* @brief Cette méthode prend la carte sur le dessus du talon et la déplace sur une colonne.
+* @param p_colonneDestination Le numéro de la colonne sur laquelle déplacer la carte du talon.
 * Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
 * Il faut que le nombre en paramètre pour le numéro de colonne soit entre 0 et 6.
 * Il faut qu'il y ait au moins une carte dans le talon.
@@ -71,6 +79,8 @@ void Solitaire::deplacerTalonAColonne (const int p_colonneDestination)
 }
 
 /**
+* @brief Cette méthode prend la carte sur le dessus du talon et la déplace sur une pile.
+* @param p_pileDestination Le numéro de la pile sur laquelle déplacer la carte du talon.
 * Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
 * Il faut que le nombre en paramètre pour le numéro de pile soit entre 0 et 3u.
 * Il faut qu'il y ait au moins une carte dans le talon.
@@ -94,6 +104,9 @@ void Solitaire::deplacerTalonAPile (const int p_pileDestination)
 
 
 /**
+* @brief Cette méthode déplace une carte d'une colonne vers une pile
+* @param p_colonneSource Le numéro de la colonne sur laquelle prélever les Cartes.
+* @param p_pileDestination Le numéro de la pile sur laquelle poser les Cartes.
 * Plusieurs conditions sont a respecter pour faire fonctionner cette méthode.
 * Il faut que le nombre en paramètre pour le numéro de colonne soit entre 0 et 6.
 * Il faut que le nombre en paramètre pour le numéro de la pile soit entre 0 et 3.
@@ -118,6 +131,8 @@ void Solitaire::deplacerColonneAPile (const int p_colonneSource, const int p_pil
 }
 
 /**
+* @brief Cette méthode indique si la partie est terminée.
+* @return Vrai si toutes les Cartes sont placées sur les piles, sinon faux.
 * Cette méthode regarde si chacune des 4 piles ont 13 cartes.
 * Si l'application a respectée les règles du Klondike, si 13 cartes sont sur chaque pile, la partie est gagnée.
 */
@@ -131,6 +146,8 @@ bool Solitaire::verifieGagne() const
 
 
 /**
+* @brief Cette méthode retourne sous le forme de string affichable la table de jeu.
+* @return L'état du jeu (Talon, Piles et Colonnes) sous la forme d'une string formattée.
 * Le format de la string retournée est :
 *   TALON				PILE1	PILE2	PILE3	PILE4
 *	
@@ -182,6 +199,10 @@ std::string Solitaire::reqEtatJeu () const
 }
 
 /**
+* @brief Surcharge de l'opérateur << qui fait l'affichage du Solitaire.
+* @param p_sortie Une référence vers l'objet ostream de l'opérateur <<
+* @param p_carte Une référence constante vers le Solitaire
+* @return L'état du jeu Solitaire
 * @see Solitaire.reqEtatJeu()
 */
 std::ostream& operator<< (std::ostream& p_sortie, const Solitaire& p_solitaire)
@@ -191,6 +212,7 @@ std::ostream& operator<< (std::ostream& p_sortie, const Solitaire& p_solitaire)
 }
 
 /**
+* @brief Cette fonction sert à initialiser le talon.
 * Cette méthode crée un paquet de carte complet (13 cartes pour chaque 4 sortes), puis le mélange.
 */
 void Solitaire::initialiserTalon()
@@ -210,6 +232,7 @@ void Solitaire::initialiserTalon()
 }
 
 /**
+* @brief Cette fonction sert à initialiser les ColonneCartes.
 * Pour initialiser chacune des colonnes, cette méthode va piger les cartes dans le talon,
 * puis va mettre ces cartes au-dessus d'une colonne.
 * @see ColonneCartes.initColonneCartes
@@ -230,13 +253,19 @@ void Solitaire::initialiserColonnes()
 	}
 }
 
-
+/**
+* @brief Cette méthode retourne le talon.
+* @return Une référence constante vers le talon.
+*/
 const std::deque<Carte>& Solitaire::reqTalon() const
 {
 	return this->m_talon;
 }
 
 /**
+* @brief Cette méthode retourne une ColonneCartes selon un numéro en paramètre.
+* @param p_numeroColonne Le numéro de la ColonneCartes désirée
+* @return Une référence constante vers une ColonneCarte
 * Cette méthode s'attend que le numéro de colonne en paramètre soit entre 0 et 6.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
 */
@@ -248,6 +277,9 @@ const ColonneCartes& Solitaire::reqColonne(const int p_numeroColonne) const
 	return this->m_colonnes[p_numeroColonne];
 }
 /**
+* @brief Cette méthode retourne une pile selon un numéro en paramètre.
+* @param p_numeroPile Le numéro de la pile désirée
+* @return Une référence constante vers une pile
 * Cette méthode s'attend que le numéro de la pile en paramètre soit entre 0 et 3.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
 */
@@ -260,6 +292,9 @@ const std::stack<Carte>& Solitaire::reqPile(const int p_numeroPile) const
 }
 
 /**
+* @brief Cette méthode donne la Carte sur le dessus d'une pile selon un numéro en paramètre
+* @param p_numeroPile Le numéro de la pile désirée
+* @return Une référence constante vers la Carte sur le dessus de la pile.
 * Cette méthode s'attend que le numéro de la pile en paramètre soit entre 0 et 3.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
 */
@@ -271,12 +306,19 @@ const Carte& Solitaire::reqDessusPile(int p_numeroPile) const
 	return this->m_piles[p_numeroPile].top();
 }
 
+/**
+* @brief Cette méthode donne la Carte sur le dessus du talon
+* @return Une référence constante vers la Carte sur le dessus du talon.
+*/
 const Carte& Solitaire::reqDessusTalon() const
 {
 	return this->m_talon.front();
 }
 
 /**
+* @brief Cette méthode donne la Carte sur le dessus d'une ColonneCartes selon un numéro en paramètre
+* @param p_numeroColonne Le numéro de la ColonneCartes désirée
+* @return Une référence constante vers la Carte sur le dessus de la ColonneCarte.
 * Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
 * @see ColonnesCartes.reqCarteDessus()
@@ -289,6 +331,10 @@ const Carte& Solitaire::reqDessusColonne(const int p_numeroColonne) const
 }
 
 /**
+* @brief Cette méthode donne la Carte situé à une position en paramètre d'une ColonneCartes selon un numéro en paramètre
+* @param p_numeroColonne Le numéro de la pile désirée
+* @param p_positionCarte La position de la carte désirée dans la colonne carte. 1 étant le dessus.
+* @return Une référence constante vers la Carte à la position donnée de la ColonneCartes
 * Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
 * Elle s'attend aussi que la position demandée soit inférieure ou égale au nombre de carte visible.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
@@ -303,6 +349,9 @@ const Carte& Solitaire::reqCartePositionColonne(const int p_numeroColonne, const
 }
 
 /**
+* @brief Cette méthode indique si une ColonneCartes est vide selon un numéro en paramètre.
+* @param p_numeroColonne Le numéro de la ColonneCartes désirée
+* @return Vrai si la ColonneCartes est vide, sinon faux.k
 * Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
 * @see ColonneCartes.estVide()
@@ -314,12 +363,19 @@ const bool Solitaire::estVideColonne(const int p_numeroColonne) const
 	return this->reqColonne(p_numeroColonne).estVide();
 }
 
+/**
+* @brief Cette méthode indique si le talon est vide.
+* @return Vrai si le talon est vide, sinon faux.
+*/
 const bool Solitaire::estVideTalon() const
 {
 	return this->reqTalon().size() == 0;
 }
 
 /**
+* @brief Cette méthode indique si une pile est vide selon un numéro en paramètre.
+* @param p_numeroPile Le numéro de la pile désirée
+* @return Vrai si la pile est vide, sinon faux.
 * Cette méthode s'attend que le numéro de la pile en paramètre soit entre 0 et 3.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
 */
@@ -331,6 +387,9 @@ const bool Solitaire::estVidePile(const int p_numeroPile) const
 }
 
 /**
+* @brief Cette méthode fourni le nombre de carte visible sur une ColonneCartes selon un numéro en paramètre.
+* @param p_numeroPile Le numéro de la ColonneCartes désirée
+* @return Le nombre de cartes visibles de la ColonneCartes
 * Cette méthode s'attend que le numéro de la colonne en paramètre soit entre 0 et 6.
 * Si ce n'est pas le cas une erreur de précondition est lancée.
 * @see ColonneCartes.reqNbCartesVisibles()
