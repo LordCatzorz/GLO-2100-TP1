@@ -87,7 +87,7 @@ const bool validerMouvementTalonVersColonne(const int p_colonne)
 {
 	PRECONDITION(p_colonne >=0);
 	PRECONDITION(p_colonne <=6);
-	bool estMouvementValide;
+	bool estMouvementValide = false;
 	if (!m_solitaire.estVideTalon())
 	{
 		const Carte& dessusTalon = m_solitaire.reqDessusTalon();
@@ -117,7 +117,7 @@ const bool validerMouvementTalonVersPile(const int p_pile)
 {
 	PRECONDITION(p_pile >=0);
 	PRECONDITION(p_pile <=3);
-	bool estMouvementValide;
+	bool estMouvementValide = false;
 	if (!m_solitaire.estVideTalon())
 	{
 		const Carte& dessusTalon = m_solitaire.reqDessusTalon();
@@ -151,7 +151,7 @@ const bool validerMouvementColonneVersPile(const int p_colonneSource, const int 
 	PRECONDITION(p_pileDestination >=0);
 	PRECONDITION(p_pileDestination <=3);
 
-	bool estMouvementValide;
+	bool estMouvementValide = false;
 	if (!m_solitaire.estVideColonne(p_colonneSource))
 	{
 		const Carte& dessusColonne = m_solitaire.reqDessusColonne(p_colonneSource);
@@ -186,7 +186,7 @@ const bool validerMouvementColonneVersColonne(const int p_colonneSource, const i
 	PRECONDITION(p_nombreCarte > 0);
 	PRECONDITION(p_nombreCarte <=13);
 
-	bool estMouvementValide;
+	bool estMouvementValide = false;
 	if (p_nombreCarte <= m_solitaire.reqNombreCartesVisibles(p_colonneSource))
 	{
 		if (!m_solitaire.estVideColonne(p_colonneSource))
